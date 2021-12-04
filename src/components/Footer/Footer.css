@@ -1,0 +1,12 @@
+footer {
+    max-width: 1300px;
+    border: 2px solid red;
+    margin: 0 auto;
+    width: 100%;
+    background-color: #ffdee4;
+    border-radius: 8px;
+    text-align: center;
+  }
+footer p{
+    margin: 5px;
+}

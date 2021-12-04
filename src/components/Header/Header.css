@@ -1,0 +1,33 @@
+header.main {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+    background-color: #ffdee4;
+    border: 2px solid red;
+    border-radius: 8px;
+}
+
+section.logo {
+    width: 10%;
+    margin-left: 20px;
+}
+
+section.logo img {
+    width: 100%;
+    height: 100%;
+}
+
+header.main section.header-mid-section {
+    color: red;
+    font-size: 1.9em;
+    font-family: 'Permanent Marker', cursive;
+}
+
+header.main ul.navbar {
+    margin-right: 20px;
+}
+
+header.main ul.navbar li{
+    margin-left: 20px;
+}
