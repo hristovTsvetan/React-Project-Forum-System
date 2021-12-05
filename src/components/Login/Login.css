@@ -1,0 +1,9 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 100px auto;
+    border: 2px solid red;
+    background-color: var(--background-color);
+    align-items: center;
+}

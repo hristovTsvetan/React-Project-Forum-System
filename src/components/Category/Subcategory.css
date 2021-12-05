@@ -1,0 +1,29 @@
+.subcategory-wrapper a {
+    width: 70%;
+}
+
+.subcategory-name {
+    width: 100%;
+    border: 1px solid white;
+    padding-left: 50px;
+}
+
+.subcategory-pub-number {
+    border: 1px solid white;
+    border-left: none;
+    width: 30%;
+    text-align: center;
+}
+
+.subcategory-name p {
+    margin: 0;
+}
+
+p.subcategory-title {
+    margin-top: 10px;
+}
+
+.subcategory-description {
+    font-size: 0.8em;
+    padding-bottom: 10px;
+}
