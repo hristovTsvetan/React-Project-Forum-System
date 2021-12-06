@@ -32,6 +32,7 @@ export default function CategoryEdit() {
               type="text"
               onChange={(e) => setNewCategoryName(e.currentTarget.value)}
               value={newCategoryName}
+              required
             />
           </div>
         </label>

@@ -37,8 +37,8 @@ function App() {
             </Route>
           </Switch>
         </BrowserRouter>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 }

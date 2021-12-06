@@ -1,20 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useModal } from "../../hooks/useModal";
 
 import './AdminPanel.css';
 
 export default function AdminPanel() {
+  const {createCategoryAction, createSubcategoryAction} = useModal();
+
   return (
     <section className="admin-header">
       <span className="admin-header-title">Admin Panel</span>
       <ul>
         <li>
-          <NavLink to="/create/category">Create caregory</NavLink>
+          <Link to="/" onClick={() => createCategoryAction(true)}>Create caregory</Link>
         </li>
         <li>
-          <NavLink to="/create/subcategory">Create subcaregory</NavLink>
+          <Link to="/" onClick={() => createSubcategoryAction(true)}>Create subcaregory</Link>
         </li>
         <li>
-          <NavLink to="/users">Administrate users</NavLink>
+          <Link to="/users">Administrate users</Link>
         </li>
       </ul>
     </section>

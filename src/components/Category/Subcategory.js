@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
 
 export default function Subcategory() {
-  const {deleteSubCategoryAction} = useModal();
+  const {deleteSubCategoryAction, editSubCategoryAction} = useModal();
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function Subcategory() {
         </div>
       </Link>
       <div className="subcategory-icons">
-        <Link to="#">
+        <Link to="/" onClick={() => editSubCategoryAction(true)}>
           <div className="edit-icon-wrapper">
             <i className="fas fa-edit"></i>
           </div>
