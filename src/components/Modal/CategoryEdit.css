@@ -1,0 +1,44 @@
+.category-edit {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-edit label {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.category-edit input {
+    margin-top: 10px;
+}
+
+.category-edit button {
+    margin-top: 15px;
+}
+
+.category-edit p{
+    text-align: center;
+}
+
+.modal-change-button-wrapper {
+    text-align: center;
+}
+
+.modal-edit-chang-btn {
+    margin-right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-edit-cancel-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}

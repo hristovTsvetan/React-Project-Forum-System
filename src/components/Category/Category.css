@@ -20,8 +20,24 @@
 .subcategory-wrapper {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-top: 30px;
     margin-left: 20px;
     margin-right: 20px;
+    width: 100%;
 }
 
+.admin-category-wrapper {
+    text-align: right;
+    margin-top:  -20px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.admin-category-wrapper i {
+    margin-right: 15px;
+}
+
+.admin-category-wrapper a:hover {
+    color: red;
+}

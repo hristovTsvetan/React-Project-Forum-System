@@ -1,5 +1,5 @@
-.subcategory-wrapper a {
-    width: 70%;
+a.sub-category-link {
+   width: 60%;
 }
 
 .subcategory-name {
@@ -11,7 +11,17 @@
 .subcategory-pub-number {
     border: 1px solid white;
     border-left: none;
-    width: 30%;
+    width: 20%;
+    text-align: center;
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.subcategory-icons {
+    border: 1px solid white;
+    border-left: none;
     text-align: center;
 }
 
@@ -26,4 +36,28 @@ p.subcategory-title {
 .subcategory-description {
     font-size: 0.8em;
     padding-bottom: 10px;
+}
+
+.subcategory-icons {
+    display: flex;
+    align-items: center;
+}
+
+.edit-icon-wrapper {
+    margin-right: 30px;
+    margin-left: 15px;
+    font-size: 1.3em;
+}
+
+.delet-icon-wrapper {
+    margin-right: 15px;
+    font-size: 1.3em;
+}
+
+.subcategory-icons a i {
+    padding: px;
+}
+
+.subcategory-icons a i:hover{
+    color: red;
 }

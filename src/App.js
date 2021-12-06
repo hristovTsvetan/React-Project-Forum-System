@@ -1,4 +1,5 @@
 import { Route, BrowserRouter, Switch } from "react-router-dom";
+import { useModal } from "./hooks/useModal";
 
 import "./App.css";
 
@@ -9,10 +10,14 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import AdminPanel from "./components/Admin/AdminPanel";
 import Posts from "./components/Posts/Posts";
+import Modal from "./components/Modal/Modal";
 
 function App() {
+  const {modal} = useModal();
+
   return (
     <div className="App">
+      {modal && <Modal />}
       <div className="wrapper">
         <BrowserRouter>
           <Header />
@@ -27,13 +32,13 @@ function App() {
             <Route path="/signup">
               <Signup />
             </Route>
-            <Route path="/category/:id/subcategory">
+            <Route path="/category/:categoryid/:subcategoryid">
               <Posts />
             </Route>
           </Switch>
         </BrowserRouter>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
