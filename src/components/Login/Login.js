@@ -5,7 +5,7 @@ export default function Login() {
       <form className="login-form">
         <span className="form-header-title">Login form</span>
         <label>
-          <div class="label-form-wrapper">
+          <div className="label-form-wrapper">
             <span>Email: </span>
           </div>
           <div className="input-form-wrapper">
@@ -13,7 +13,7 @@ export default function Login() {
           </div>
         </label>
         <label>
-          <div class="label-form-wrapper">
+          <div className="label-form-wrapper">
             <span>Password: </span>
           </div>
           <div className="input-form-wrapper">

@@ -1,0 +1,30 @@
+.post-title-wrapper {
+    width: 70%;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+}
+
+.post-title-wrapper p {
+    margin-left: 20px;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+.post-icons {
+    width: 10%;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-replies-number {
+    width: 20%;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.post-icons a:hover {
+    color: red;
+}

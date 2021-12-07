@@ -46,6 +46,27 @@ const modalReducer = (state, action) => {
             }
             return {...state, createSubcategory: action.payload, modal: false};
         }
+        case 'EDIT_POST':
+        {
+            if(action.payload === true) {
+                return {...state, editPost: action.payload, modal: true}
+            }
+            return {...state, editPost: action.payload, modal: false};
+        }
+        case 'DELETE_POST':
+        {
+            if(action.payload === true) {
+                return {...state, deletePost: action.payload, modal: true}
+            }
+            return {...state, deletePost: action.payload, modal: false};
+        }
+        case 'CREATE_POST':
+        {
+            if(action.payload === true) {
+                return {...state, createPost: action.payload, modal: true}
+            }
+            return {...state, createPost: action.payload, modal: false};
+        }
         default:
             return state;
     }
@@ -59,6 +80,9 @@ export function ModalProvider({ children }) {
         editSubcategory: false,
         createCategory: false,
         createSubcategory: false,
+        editPost: false,
+        deletePost: false,
+        createPost: false,
         modal: false,
     });
 
@@ -86,6 +110,18 @@ export function ModalProvider({ children }) {
         dispatch({type: 'CREATE_SUBCATEGORY', payload: createSubcategory});
     };
 
+    const editPostAction = (editPost) => {
+        dispatch({type: "EDIT_POST", payload: editPost});
+    }
+
+    const deletePostAction = (deletePost) => {
+        dispatch({type: "DELETE_POST", payload: deletePost});
+    }
+
+    const createPostAction = (createPost) => {
+        dispatch({type: "CREATE_POST", payload: createPost});
+    }
+
     return (
       <ModalContext.Provider
         value={{
@@ -96,6 +132,9 @@ export function ModalProvider({ children }) {
           editSubCategoryAction,
           createCategoryAction,
           createSubcategoryAction,
+          createPostAction,
+          deletePostAction,
+          editPostAction
         }}
       >
         {children}

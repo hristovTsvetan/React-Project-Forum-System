@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import AdminPanel from "./components/Admin/AdminPanel";
 import Posts from "./components/Posts/Posts";
+import Comments from "./components/Comments/Comments";
 import Modal from "./components/Modal/Modal";
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route path="/category/:categoryid/:subcategoryid">
               <Posts />
+            </Route>
+            <Route path="/posts/:catId/:subId/:postId">
+              <Comments />
             </Route>
           </Switch>
         </BrowserRouter>

@@ -1,0 +1,18 @@
+.posts-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.category-subcategory-delimiter {
+    margin: 0 15px;
+    font-weight: 600;
+}
+
+.category-title-wrapper {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
