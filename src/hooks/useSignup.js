@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { authObj } from "../firebase/config";
+import { useUser } from "./useUser";
 
 export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
+    const {loginAction} = useUser();
+    //for cleanup function
+    const [isCanceled, setIsCanceled] = useState(false);
 
     const signup = async (email, password, displayName, repeatPassword) => {
         setError(null);
@@ -24,15 +28,28 @@ export const useSignup = () => {
 
             await response.user.updateProfile({displayName});
 
-            setIsPending(false);
-            setError(null);
+            //dispatch login action
+            loginAction(response.user);
+
+            if(!isCanceled) {
+                setIsPending(false);
+                setError(null);
+            }
         } 
         catch(err) {
-            console.log(err.message);
-            setError(err.message);
-            setIsPending(false);
+            if(!isCanceled) {
+              console.log(err.message);
+              setError(err.message);
+              setIsPending(false);
+            }
         }
     }
+
+    useEffect(() => {
+        return () => {
+            setIsCanceled(true);
+        }
+    }, [])
 
     return {signup, error, isPending};
 }

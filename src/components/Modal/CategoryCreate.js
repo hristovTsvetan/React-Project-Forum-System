@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useModal } from "../../hooks/useModal";
+import { useFirestore } from "../../hooks/useFirestore";
 
 export default function CategoryCreate() {
     const [newCategoryName, setNewCategoryName] = useState('');
     const {createCategoryAction} = useModal();
+    const {addDocument, response} = useFirestore('categories');
 
-    const submitHandler = () => {
-
+    const submitHandler = (e) => {
+      e.preventDefault();
+      
+      addDocument({ title: newCategoryName, subcategories: [] });
+      createCategoryAction(false);
     };
 
     return (

@@ -1,16 +1,18 @@
-import { createContext } from "react";
-import { useReducer } from "react";
+import { useReducer, createContext, useEffect } from "react";
+import { authObj } from "../firebase/config";
 
 export const UserContext = createContext();
 
 const userReducer = (state, action) => {
     switch (action.type) {
-        case 'SET_USER_ID':
-            return {...state, uid: action.payload};
-            break;
-    
-        default:
-            break;
+      case "LOGIN":
+        return { ...state, user: action.payload };
+      case "LOGOUT":
+        return { ...state, user: action.payload };
+      case "AUTH_IS_READY":
+        return { ...state, user: action.payload, isAuthReady: true };
+      default:
+        return state;
     }
 }
 
@@ -18,18 +20,35 @@ const userReducer = (state, action) => {
 export function UserProvider({children}) {
 
     const [state, dispatch] = useReducer(userReducer, {
-        uid: '',
-        role: 'User',
-        displayName: '',
+        user: null,
+        isAuthReady: false,
     });
 
-    const setUserId = (uid) => {
-        dispatch({type: 'SET_USER_ID', payload: uid});
+    console.log('User context state is:', state);
+
+    const loginAction = (user) => {
+        dispatch({type: 'LOGIN', payload: user});
+    };
+
+    const logoutAction = () => {
+        dispatch({type: 'LOGOUT', payload: null});
+    };
+
+    const authIsReady = (user) => {
+        dispatch({type: 'AUTH_IS_READY', payload: user})
     }
 
+    useEffect(() => {
+        const unsub = authObj.onAuthStateChanged((user) => {
+            authIsReady(user);
+            unsub();
+        })
+    }, [])
+
+
     return (
-        <UserContext.Provider value={{...state, setUserId}}>
-            {children}
-        </UserContext.Provider>
-    )
+      <UserContext.Provider value={{ ...state, loginAction, logoutAction }}>
+        {children}
+      </UserContext.Provider>
+    );
 }

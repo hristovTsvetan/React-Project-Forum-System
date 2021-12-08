@@ -1,14 +1,43 @@
 import { useState } from "react";
 import { useModal } from "../../hooks/useModal";
+import { useCollection } from "../../hooks/useCollection";
+import { useFirestore } from "../../hooks/useFirestore";
+import { timestamp } from "../../firebase/config";
 
 export default function SubcategoryCreate() {
     const [newSubcategoryName, setNewSubcategoryName] = useState('');
     const [newSubcategoryDescription, setNewSubcategoryDescription] = useState('');
+    const [category, setCategory] = useState('');
     const {createSubcategoryAction} = useModal();
+    const {documents} = useCollection('categories');
+    const {getDocument, updateDocument} = useFirestore('categories');
 
-    const submitHandler = () => {
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      const curDoc = await getDocument(category);
 
+      if(curDoc) {
+        const createdAt = timestamp.fromDate(new Date());
+        const newSubCategory = {
+          categoryName: newSubcategoryName,
+          categoryDescription: newSubcategoryDescription,
+          parentId: category,
+          category: curDoc.title,
+          createdAt,
+          posts: []
+        }
+
+        const subCatSet = {subcategories: [...curDoc.subcategories, newSubCategory]};
+
+        updateDocument(category, subCatSet);
+
+        createSubcategoryAction(false);
+      }
     };
+
+    const changeHandler = (e) => {
+      setCategory(e.target.value);
+    }
 
     return (
       <form className="category-edit" onSubmit={submitHandler}>
@@ -30,9 +59,9 @@ export default function SubcategoryCreate() {
             <span>Select category:</span>
           </div>
           <div>
-           <select>
-               <option value="One">One</option>
-               <option value="Two">Two</option>
+           <select onChange={changeHandler} required>
+             <option>Select</option>
+            {documents?.map(cat => <option key={cat.id} value={cat.id}>{cat.title}</option>)}
            </select>
           </div>
         </label>

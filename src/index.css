@@ -61,3 +61,11 @@ a {
   border: 1px solid red;
   padding: 5px 20px;
 }
+
+.info-message {
+  background-color: #156915;
+  color: white;
+  text-align: center;
+  width: 50%;
+  margin: 50px auto;
+}

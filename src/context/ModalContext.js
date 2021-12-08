@@ -67,6 +67,10 @@ const modalReducer = (state, action) => {
             }
             return {...state, createPost: action.payload, modal: false};
         }
+        case 'SET_ID':
+        {
+            return {...state, itemId: action.payload};
+        }
         default:
             return state;
     }
@@ -84,13 +88,16 @@ export function ModalProvider({ children }) {
         deletePost: false,
         createPost: false,
         modal: false,
+        itemId: null
     });
 
-    const editCategoryAction = (editCategory) => {
+    const editCategoryAction = (editCategory, id) => {
+        dispatch({type: 'SET_ID', payload: id});
         dispatch({type: 'EDIT_CATEGORY', payload: editCategory});
     }
 
-    const deleteCategoryAction = (deleteCategory) => {
+    const deleteCategoryAction = (deleteCategory, id) => {
+        dispatch({type: 'SET_ID', payload: id});
         dispatch({type: 'DELETE_CATEGORY', payload: deleteCategory});
     };
 

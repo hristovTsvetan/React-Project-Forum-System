@@ -1,4 +1,5 @@
 import { useModal } from "../../hooks/useModal"
+import { useFirestore } from "../../hooks/useFirestore";
 
 export default function Delete() {
     const {
@@ -8,13 +9,23 @@ export default function Delete() {
         deletePost,
         deleteSubcategory,
         deleteCategory,
-    } = useModal();
+        itemId,
 
-    let deleteMessage = false;
+    } = useModal();
+    const {deleteDocument} = useFirestore('categories');
+
+    let deleteMessage = null;
 
     deletePost && (deleteMessage = 'Are you sure that you want to delete post?');
     deleteSubcategory && (deleteMessage = 'Are you sure that you want to delete subcategory?');
     deleteCategory && (deleteMessage = 'Are you sure that you want to delete category?');
+
+    const handleClick = () => {
+        if(deleteCategory) {
+            deleteDocument(itemId);
+            deleteCategoryAction(false, null)
+        }
+    }
 
     return (
         <>
@@ -22,9 +33,9 @@ export default function Delete() {
                 {deleteMessage}
             </p>
             <div className="modal-buttons-delete">
-                <button className="delete-agree-btn">Yes</button>
+                <button className="delete-agree-btn" onClick={handleClick}>Yes</button>
                 <button className="delete-disagree-btn" onClick={() => {
-                    deleteCategoryAction(false);
+                    deleteCategoryAction(false, null);
                     deleteSubCategoryAction(false);
                     deletePostAction(false);
                 }}>No</button>
