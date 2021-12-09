@@ -9,7 +9,7 @@ export default function Post() {
     return (
       <>
         <div className="post-title-wrapper">
-          <Link className="post-link" to="/posts/catId/subId/postId">
+          <Link className="post-link" to="/comments/catId/subId/postId">
             <div className="post-name">
               <p className="post-title">My honda stop working</p>
             </div>

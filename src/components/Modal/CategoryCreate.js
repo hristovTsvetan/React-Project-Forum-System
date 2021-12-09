@@ -10,7 +10,7 @@ export default function CategoryCreate() {
     const submitHandler = (e) => {
       e.preventDefault();
       
-      addDocument({ title: newCategoryName, subcategories: [] });
+      addDocument({ title: newCategoryName, subCategories: {} });
       createCategoryAction(false);
     };
 

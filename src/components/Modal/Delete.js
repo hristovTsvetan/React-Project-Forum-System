@@ -12,7 +12,7 @@ export default function Delete() {
         itemId,
 
     } = useModal();
-    const {deleteDocument} = useFirestore('categories');
+    const {deleteDocument, updateDocument, getDocument} = useFirestore('categories');
 
     let deleteMessage = null;
 
@@ -20,10 +20,19 @@ export default function Delete() {
     deleteSubcategory && (deleteMessage = 'Are you sure that you want to delete subcategory?');
     deleteCategory && (deleteMessage = 'Are you sure that you want to delete category?');
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if(deleteCategory) {
             deleteDocument(itemId);
             deleteCategoryAction(false, null)
+        }
+        else if(deleteSubcategory) {
+             const origDoc = await getDocument(itemId.parentId);
+             
+             delete origDoc.subCategories[itemId.id];
+
+             updateDocument(itemId.parentId, origDoc)
+
+            deleteSubCategoryAction(false, null);
         }
     }
 

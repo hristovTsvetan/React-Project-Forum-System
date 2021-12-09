@@ -3,6 +3,7 @@ import { useModal } from "../../hooks/useModal";
 import { useCollection } from "../../hooks/useCollection";
 import { useFirestore } from "../../hooks/useFirestore";
 import { timestamp } from "../../firebase/config";
+import uniqid from 'uniqid';
 
 export default function SubcategoryCreate() {
     const [newSubcategoryName, setNewSubcategoryName] = useState('');
@@ -18,18 +19,21 @@ export default function SubcategoryCreate() {
 
       if(curDoc) {
         const createdAt = timestamp.fromDate(new Date());
+        const subCatId = uniqid();
+
         const newSubCategory = {
-          categoryName: newSubcategoryName,
-          categoryDescription: newSubcategoryDescription,
-          parentId: category,
-          category: curDoc.title,
-          createdAt,
-          posts: []
-        }
+          [subCatId]: {
+            subCategoryName: newSubcategoryName,
+            subCategoryDescription: newSubcategoryDescription,
+            parentId: category,
+            category: curDoc.title,
+            createdAt,
+            id: subCatId,
+            posts: {},
+          },
+        };
 
-        const subCatSet = {subcategories: [...curDoc.subcategories, newSubCategory]};
-
-        updateDocument(category, subCatSet);
+        updateDocument(category, {subCategories: {...curDoc.subCategories, ...newSubCategory}});
 
         createSubcategoryAction(false);
       }

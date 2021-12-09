@@ -2,16 +2,39 @@ import './SubcategoryEdit.css';
 
 import { useState } from 'react';
 import { useModal } from '../../hooks/useModal';
+import { useFirestore } from '../../hooks/useFirestore';
+import { useEffect } from 'react/cjs/react.development';
 
 export default function SubcategoryEdit() {
-    const [newSubcategoryName, setNewSubcategoryName] = useState('');
-    const [newSubcategoryDescription, setNewSubcategoryDescription] = useState('');
-    const {editSubCategoryAction} = useModal();
+    const [newSubcategoryName, setNewSubcategoryName] = useState(null);
+    const [newSubcategoryDescription, setNewSubcategoryDescription] = useState(null);
+    const [currentTitle, setCurrentTitle] = useState('');
+    const [currentDescription, setCurrentDescription] = useState('');
+    const {editSubCategoryAction, itemId} = useModal();
+    const {getDocument, updateDocument} = useFirestore('categories');
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        console.log(newSubcategoryName, newSubcategoryDescription);
+    useEffect(async () => {
+      const curCategory = await getDocument(itemId.parentId);
+      const curSubCategory = curCategory.subCategories[itemId.id];
+      setCurrentTitle(curSubCategory.subCategoryName);
+      setCurrentDescription(curSubCategory.subCategoryDescription);
+    }, []);
+
+
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      const curCategory = await getDocument(itemId.parentId);
+      const curSubCategory = curCategory.subCategories[itemId.id];
+
+      curSubCategory.subCategoryName = newSubcategoryName;
+      curSubCategory.subCategoryDescription = newSubcategoryDescription;
+
+      await updateDocument(itemId.parentId, curCategory);
+
+      editSubCategoryAction(false, null)
     }
+
+    
 
     return (
       <form className="category-edit" onSubmit={submitHandler}>
@@ -23,7 +46,7 @@ export default function SubcategoryEdit() {
             <input
               type="text"
               onChange={(e) => setNewSubcategoryName(e.currentTarget.value)}
-              value={newSubcategoryName}
+              value={newSubcategoryName === null ? currentTitle : newSubcategoryName}
               required
             />
           </div>
@@ -40,7 +63,7 @@ export default function SubcategoryEdit() {
               onChange={(e) =>
                 setNewSubcategoryDescription(e.currentTarget.value)
               }
-              value={newSubcategoryDescription}
+              value={ newSubcategoryDescription === null ? currentDescription : newSubcategoryDescription}
             ></textarea>
           </div>
         </label>
@@ -48,7 +71,7 @@ export default function SubcategoryEdit() {
           <button className="modal-edit-chang-btn">Change</button>
           <button
             className="modal-edit-cancel-btn"
-            onClick={() => editSubCategoryAction(false)}
+            onClick={() => editSubCategoryAction(false, null)}
           >
             Cancel
           </button>

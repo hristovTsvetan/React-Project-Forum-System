@@ -6,7 +6,7 @@ import { useModal } from "../../hooks/useModal";
 
 export default function Category({category}) {
   const {editCategoryAction, deleteCategoryAction} = useModal();
-  
+
     return (
       <>
         <section className="category">
@@ -22,9 +22,8 @@ export default function Category({category}) {
             <span className="category-title">{category.title}</span>
           </div>
           <article className="subcategory-wrapper">
-            <Subcategory />
-            <Subcategory />
-            <Subcategory />
+            {Object.values(category.subCategories).length > 0 && <Subcategory subCategories={category.subCategories}/>}
+            {Object.values(category.subCategories).length === 0 && <p className="info-message">There is no subcategories in this category</p>}
           </article>
         </section>
       </>

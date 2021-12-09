@@ -38,10 +38,10 @@ function App() {
                   {!user && <Signup />}
                   {user && <Redirect to="/" />}
                 </Route>
-                <Route path="/category/:categoryid/:subcategoryid">
+                <Route path="/posts/:categoryid/:subcategoryid">
                   <Posts />
                 </Route>
-                <Route path="/posts/:catId/:subId/:postId">
+                <Route path="/comments/:catId/:subId/:postId">
                   <Comments />
                 </Route>
               </Switch>

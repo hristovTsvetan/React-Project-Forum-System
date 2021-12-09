@@ -101,11 +101,13 @@ export function ModalProvider({ children }) {
         dispatch({type: 'DELETE_CATEGORY', payload: deleteCategory});
     };
 
-    const deleteSubCategoryAction = (deleteSubCategory) => {
+    const deleteSubCategoryAction = (deleteSubCategory, id) => {
+        dispatch({type: 'SET_ID', payload: id});
         dispatch({type: 'DELETE_SUBCATEGORY', payload: deleteSubCategory});
     };
 
-    const editSubCategoryAction = (editSubCategory) => {
+    const editSubCategoryAction = (editSubCategory, id) => {
+        dispatch({type: 'SET_ID', payload: id});
         dispatch({type: 'EDIT_SUBCATEGORY', payload: editSubCategory});
     };
 
