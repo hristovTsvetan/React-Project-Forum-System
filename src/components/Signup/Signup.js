@@ -1,7 +1,6 @@
 import "./Signup.css";
 
 import { useSignup } from "../../hooks/useSignup";
-import { useHistory } from "react-router";
 
 import { useState } from "react";
 
@@ -11,7 +10,6 @@ export default function Signup() {
     const[displayName, setDisplayName] = useState('');
     const[repeatPassword, setRepeatPassword] = useState('');
     const[avatar, setAvatar] = useState('');
-    const history = useHistory();
     const {signup, error, isPending} = useSignup();
 
     const handleSubmit = async (e) => {

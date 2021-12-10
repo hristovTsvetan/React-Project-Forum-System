@@ -5,13 +5,18 @@ import { useFirestore } from "../../hooks/useFirestore";
 export default function CategoryCreate() {
     const [newCategoryName, setNewCategoryName] = useState('');
     const {createCategoryAction} = useModal();
-    const {addDocument, response} = useFirestore('categories');
+    const {addDocument} = useFirestore('categories');
 
     const submitHandler = (e) => {
       e.preventDefault();
       
-      addDocument({ title: newCategoryName, subCategories: {} });
-      createCategoryAction(false);
+      const fetchData = async () => {
+        await addDocument({ title: newCategoryName, subCategories: {} });
+        createCategoryAction(false);
+      }
+
+      fetchData()
+            
     };
 
     return (

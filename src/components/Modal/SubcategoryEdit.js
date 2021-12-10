@@ -6,32 +6,42 @@ import { useFirestore } from '../../hooks/useFirestore';
 import { useEffect } from 'react/cjs/react.development';
 
 export default function SubcategoryEdit() {
-    const [newSubcategoryName, setNewSubcategoryName] = useState(null);
-    const [newSubcategoryDescription, setNewSubcategoryDescription] = useState(null);
+    const [newSubcategoryName, setNewSubcategoryName] = useState('');
+    const [newSubcategoryDescription, setNewSubcategoryDescription] = useState('');
     const [currentTitle, setCurrentTitle] = useState('');
     const [currentDescription, setCurrentDescription] = useState('');
     const {editSubCategoryAction, itemId} = useModal();
     const {getDocument, updateDocument} = useFirestore('categories');
 
-    useEffect(async () => {
-      const curCategory = await getDocument(itemId.parentId);
-      const curSubCategory = curCategory.subCategories[itemId.id];
-      setCurrentTitle(curSubCategory.subCategoryName);
-      setCurrentDescription(curSubCategory.subCategoryDescription);
-    }, []);
+    useEffect(() => {
+
+      const getData = async () => {
+        if(itemId) {
+          const curCategory = await getDocument(itemId.parentId);
+          const curSubCategory = curCategory.subCategories[itemId.id];
+          setCurrentTitle(curSubCategory.subCategoryName);
+          setCurrentDescription(curSubCategory.subCategoryDescription);
+        }
+        
+      };
+
+      getData();   
+
+    }, [])
 
 
     const submitHandler = async (e) => {
       e.preventDefault();
-      const curCategory = await getDocument(itemId.parentId);
-      const curSubCategory = curCategory.subCategories[itemId.id];
 
-      curSubCategory.subCategoryName = newSubcategoryName;
-      curSubCategory.subCategoryDescription = newSubcategoryDescription;
-
-      await updateDocument(itemId.parentId, curCategory);
-
-      editSubCategoryAction(false, null)
+        const curCategory = await getDocument(itemId.parentId);
+        const curSubCategory = curCategory.subCategories[itemId.id];
+  
+        curSubCategory.subCategoryName = newSubcategoryName;
+        curSubCategory.subCategoryDescription = newSubcategoryDescription;
+  
+        await updateDocument(itemId.parentId, curCategory);
+  
+        editSubCategoryAction(false, null);
     }
 
     
@@ -40,13 +50,29 @@ export default function SubcategoryEdit() {
       <form className="category-edit" onSubmit={submitHandler}>
         <label>
           <div>
+            <span>Current subcategory name:</span>
+          </div>
+          <div>
+            <p>{currentTitle}</p>
+          </div>
+        </label>
+        <label>
+          <div>
+            <span>Current subcategory description:</span>
+          </div>
+          <div>
+            <p>{currentDescription}</p>
+          </div>
+        </label>
+        <label>
+          <div>
             <span>New subcategory name:</span>
           </div>
           <div>
             <input
               type="text"
               onChange={(e) => setNewSubcategoryName(e.currentTarget.value)}
-              value={newSubcategoryName === null ? currentTitle : newSubcategoryName}
+              value={newSubcategoryName}
               required
             />
           </div>
@@ -63,7 +89,7 @@ export default function SubcategoryEdit() {
               onChange={(e) =>
                 setNewSubcategoryDescription(e.currentTarget.value)
               }
-              value={ newSubcategoryDescription === null ? currentDescription : newSubcategoryDescription}
+              value={newSubcategoryDescription}
             ></textarea>
           </div>
         </label>

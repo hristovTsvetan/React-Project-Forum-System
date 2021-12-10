@@ -1,12 +1,43 @@
 import { useModal } from "../../hooks/useModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useFirestore } from "../../hooks/useFirestore";
 
 export default function PostEdit() {
 
     const [newPostName, setNewPostName] = useState('');
-    const {editPostAction} = useModal();
+    const [currentTitle, setCurrentTitle] = useState('');
+    const {editPostAction, itemId} = useModal();
+    const {getDocument, updateDocument} = useFirestore('categories');
+    
+    useEffect(() => {
 
-    const submitHandler = () => {
+      const getData = async () => {
+        if(itemId) {
+          const curCategory = await getDocument(itemId.catId);
+          const curSubCategory = curCategory.subCategories[itemId.subId];
+          const curPost = curSubCategory.posts[itemId.id];
+
+          setCurrentTitle(curPost.postTitle);
+        }
+        
+      };
+
+      getData();   
+
+    }, [])
+
+
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      
+      const curCategory = await getDocument(itemId.catId);
+      const curPost = curCategory.subCategories[itemId.subId].posts[itemId.id];
+
+      curPost.postTitle = newPostName;
+      
+      await updateDocument(itemId.catId, curCategory);
+
+      editPostAction(false, null);
 
     };
 
@@ -17,7 +48,7 @@ export default function PostEdit() {
             <span>Current post title:</span>
           </div>
           <div>
-            <p>Hello there</p>
+            <p>{currentTitle}</p>
           </div>
         </label>
         <label>
@@ -35,7 +66,7 @@ export default function PostEdit() {
         </label>
         <div className="modal-change-button-wrapper">
           <button className="modal-edit-chang-btn">Change</button>
-          <button className="modal-edit-cancel-btn" onClick={() => editPostAction(false)}>Cancel</button>
+          <button className="modal-edit-cancel-btn" onClick={() => editPostAction(false, null)}>Cancel</button>
         </div>
       </form>
     )

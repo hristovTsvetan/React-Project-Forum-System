@@ -30,9 +30,18 @@ export default function Delete() {
              
              delete origDoc.subCategories[itemId.id];
 
-             updateDocument(itemId.parentId, origDoc)
+             await updateDocument(itemId.parentId, origDoc)
 
             deleteSubCategoryAction(false, null);
+        }
+        else if(deletePost) {
+            const origDoc = await getDocument(itemId.catId);
+
+            delete origDoc.subCategories[itemId.subId].posts[itemId.id];
+
+            await updateDocument(itemId.catId, origDoc);
+
+            deletePostAction(false, null);
         }
     }
 

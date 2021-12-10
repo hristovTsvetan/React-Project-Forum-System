@@ -119,11 +119,13 @@ export function ModalProvider({ children }) {
         dispatch({type: 'CREATE_SUBCATEGORY', payload: createSubcategory});
     };
 
-    const editPostAction = (editPost) => {
+    const editPostAction = (editPost, id) => {
+        dispatch({type: 'SET_ID', payload: id});
         dispatch({type: "EDIT_POST", payload: editPost});
     }
 
-    const deletePostAction = (deletePost) => {
+    const deletePostAction = (deletePost, id) => {
+        dispatch({type: 'SET_ID', payload: id});
         dispatch({type: "DELETE_POST", payload: deletePost});
     }
 

@@ -16,3 +16,17 @@
     margin-bottom: 20px;
     margin-top: 50px;
 }
+
+.add-post {
+    text-align: center;
+}
+
+.add-post a {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+}

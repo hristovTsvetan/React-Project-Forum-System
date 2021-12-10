@@ -1,24 +1,59 @@
-import { Link } from "react-router-dom";
-import Post from "./Post"
+import PostsList from "./PostsList";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect, useRef} from "react";
+import { useFirestore } from "../../hooks/useFirestore";
+import { useDocument } from "../../hooks/useDocument";
 
 import './Posts.css';
 
+
 export default function Posts() {
-    return (
-      <>
-      <div className="category-title-wrapper">
-            <span className="category-title">Category name</span>
+  const {categoryid, subcategoryid} = useParams();
+  const [categoryName, setCategoryName] = useState('');
+  const [subCategoryName, setSubCategoryName] = useState('');
+  const {getDocument, } = useFirestore('categories');
+  const {document} = useDocument('categories', categoryid);
+ 
+  useEffect(() => {
+
+    const setData = async () => {
+      const curCategory = await getDocument(categoryid);
+
+      const curSubCategory = curCategory.subCategories[subcategoryid];
+  
+      setCategoryName(curSubCategory.category);
+      setSubCategoryName(curSubCategory.subCategoryName);
+
+    }
+
+    setData();
+  }, [categoryid, subcategoryid])
+
+  return (
+    <>
+      {document && (
+        <>
+          <div className="category-title-wrapper">
+            <span className="category-title">{categoryName}</span>
             <span className="category-subcategory-delimiter">/</span>
-            <span className="category-title">Subcategory name</span>
+            <span className="category-title">{subCategoryName}</span>
           </div>
-      <section className="category posts">
-        <article className="posts-wrapper">
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-        </article>
-      </section>
-      </>
-    );
+
+          <div className="add-post">
+            <Link to={`/CreatePost/${categoryid}/${subcategoryid}`}>
+              Add post
+            </Link>
+          </div>
+
+          <section className="category posts">
+            <article className="posts-wrapper">
+              
+              {document && <PostsList allPosts = {Object.values(document.subCategories[subcategoryid].posts)}/>}
+              {document && Object.values(document.subCategories[subcategoryid].posts).length === 0  && <p className="info-message">There is no posts ath this categories!</p>}
+            </article>
+          </section>
+        </>
+      )}
+    </>
+  );
 }

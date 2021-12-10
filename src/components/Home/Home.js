@@ -10,7 +10,7 @@ export default function Home() {
     <main className="home-wrapper">
         {error && <p>{error}</p>}
         {documents && <CategoryList categories={documents} />}
-        {documents?.length == 0 && <p className="info-message">There is no categories</p>}
+        {documents?.length === 0 && <p className="info-message">There is no categories</p>}
     </main>
   );
 }

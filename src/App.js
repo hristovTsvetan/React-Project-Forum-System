@@ -13,6 +13,7 @@ import Posts from "./components/Posts/Posts";
 import Comments from "./components/Comments/Comments";
 import Modal from "./components/Modal/Modal";
 import { useUser } from "./hooks/useUser";
+import CreatePost from "./components/Posts/CreatePost";
 
 function App() {
   const {modal} = useModal();
@@ -43,6 +44,10 @@ function App() {
                 </Route>
                 <Route path="/comments/:catId/:subId/:postId">
                   <Comments />
+                </Route>
+                <Route path="/CreatePost/:categoryid/:subcategoryid">
+                  {user && <CreatePost />}
+                  {!user && <Redirect to="/" />}
                 </Route>
               </Switch>
             </BrowserRouter>
