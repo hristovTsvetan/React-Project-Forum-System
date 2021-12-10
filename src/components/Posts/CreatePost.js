@@ -42,6 +42,8 @@ export default function CreatePost() {
                     subCategoryId: subcategoryid,
                     categoryId: categoryid,
                     content: commentContent,
+                    likes: [],
+                    dislikes: [],
                 }
             }
         } }; 

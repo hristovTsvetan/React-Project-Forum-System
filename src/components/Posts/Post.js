@@ -4,13 +4,13 @@ import { useModal } from "../../hooks/useModal";
 import './Post.css';
 
 export default function Post({postInfo}) {
-
   const {deletePostAction, editPostAction} = useModal();
+
 
     return (
       <>
         <div className="post-title-wrapper">
-          <Link className="post-link" to="/comments/catId/subId/postId">
+          <Link className="post-link" to={`/comments/${postInfo.categoryId}/${postInfo.subCategoryId}/${postInfo.id}`}>
             <div className="post-name">
               <p className="post-title">{postInfo.postTitle}</p>
             </div>

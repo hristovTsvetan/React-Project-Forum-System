@@ -5,6 +5,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 import { useDocument } from "../../hooks/useDocument";
 
 import './Posts.css';
+import { useUser } from "../../hooks/useUser";
 
 
 export default function Posts() {
@@ -13,6 +14,7 @@ export default function Posts() {
   const [subCategoryName, setSubCategoryName] = useState('');
   const {getDocument, } = useFirestore('categories');
   const {document} = useDocument('categories', categoryid);
+  const { user } = useUser();
  
   useEffect(() => {
 
@@ -39,17 +41,17 @@ export default function Posts() {
             <span className="category-title">{subCategoryName}</span>
           </div>
 
-          <div className="add-post">
+          {user &&<div className="add-post">
             <Link to={`/CreatePost/${categoryid}/${subcategoryid}`}>
               Add post
             </Link>
           </div>
-
+          }
           <section className="category posts">
             <article className="posts-wrapper">
               
               {document && <PostsList allPosts = {Object.values(document.subCategories[subcategoryid].posts)}/>}
-              {document && Object.values(document.subCategories[subcategoryid].posts).length === 0  && <p className="info-message">There is no posts ath this categories!</p>}
+              {document && Object.values(document.subCategories[subcategoryid].posts).length === 0  && <p className="info-message">There is no posts at this category!</p>}
             </article>
           </section>
         </>

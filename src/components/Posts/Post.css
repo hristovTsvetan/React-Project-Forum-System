@@ -28,3 +28,7 @@
 .post-icons a:hover {
     color: red;
 }
+
+a.post-link {
+    width: 100%;
+}
