@@ -14,6 +14,7 @@ export default function Posts() {
   const [subCategoryName, setSubCategoryName] = useState('');
   const {getDocument, } = useFirestore('categories');
   const {document} = useDocument('categories', categoryid);
+  const [isCanceled, setIsCanceled] = useState(false);
   const { user } = useUser();
  
   useEffect(() => {
@@ -23,12 +24,17 @@ export default function Posts() {
 
       const curSubCategory = curCategory.subCategories[subcategoryid];
   
-      setCategoryName(curSubCategory.category);
-      setSubCategoryName(curSubCategory.subCategoryName);
-
+      if(!isCanceled) {
+        setCategoryName(curSubCategory.category);
+        setSubCategoryName(curSubCategory.subCategoryName);
+      }
     }
 
     setData();
+
+    return () => {
+      setIsCanceled(true);
+    }
   }, [categoryid, subcategoryid])
 
   return (

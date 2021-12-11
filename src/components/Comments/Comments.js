@@ -2,6 +2,8 @@ import Comment from "./Comment";
 import {useDocument} from "../../hooks/useDocument";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useUser } from "../../hooks/useUser";
 
 import "./Comments.css";
 
@@ -13,7 +15,7 @@ export default function Comments() {
   const [categoryName, setCategoryName] = useState('');
   const [subCategoryName, setSubCategoryName] = useState('');
   const [postName, setPostName] = useState('');
-  const [currentPost, setCurrentPost] = useState('');
+  const { user } = useUser();
 
   useEffect(() => {
 
@@ -22,7 +24,7 @@ export default function Comments() {
       setComments(
         Object.values(
           document.subCategories[subId].posts[postId].comments
-        ).sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate())
+        ).sort((a, b) => b.createdAt.toDate() + a.createdAt.toDate())
       );
 
       document && setCategoryName(document.title);
@@ -44,6 +46,10 @@ export default function Comments() {
           <span className="category-subcategory-delimiter">/</span>
           <span className="category-title">{postName}</span>
         </div>
+        {user && <div className="create-post-wrappper">
+          <Link to={`/CreateComment/${catId}/${subId}/${postId}`} className="add-comment">Add comment</Link>
+        </div>
+        }
         <section className="comments-wrapper">
           {comments && comments.map((com) => <Comment key={com.id} comment={com} />)}
         </section>

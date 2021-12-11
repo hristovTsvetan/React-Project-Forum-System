@@ -20,7 +20,6 @@ export const useSignup = () => {
             }
 
             const response = await authObj.createUserWithEmailAndPassword(email, password);
-            console.log(response);
             
             if(!response) {
                 throw new Error("Signup fail!");

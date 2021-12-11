@@ -8,3 +8,24 @@ section.comments-wrapper {
     margin-top: 50px;
     text-align: center;
 }
+
+
+
+.add-comment {
+    text-align: center;
+}
+
+a.add-comment {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.create-post-wrappper {
+    text-align: center;
+    margin-top: 30px;
+}

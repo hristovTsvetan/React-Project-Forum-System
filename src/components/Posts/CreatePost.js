@@ -14,7 +14,7 @@ export default function CreatePost() {
     const [postTile, setPostTitle] = useState('');
     const [commentContent, setCommentContent] = useState('');
     const {categoryid, subcategoryid} = useParams();
-    const {getDocument, updateDocument} = useFirestore('categories');
+    const {getDocument, updateDocument, response} = useFirestore('categories');
     const {user} = useUser();
     const history = useHistory();
 
@@ -106,7 +106,8 @@ export default function CreatePost() {
               ></textarea>
             </div>
           </label>
-          <button>Create</button>
+          {!response.isPending && <button>Create</button>}
+          {response.isPending && <button disabled className="btn-loading">Loading...</button>}
         </form>
       </>
     );
