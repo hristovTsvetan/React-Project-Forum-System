@@ -79,3 +79,7 @@ p.comment-like-dislike-counter {
 .delete-post a:hover {
     color:red;
 }
+
+.edit-comment {
+    margin-left: 15px;
+}

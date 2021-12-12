@@ -1,0 +1,13 @@
+.edit-comment-wrapper label{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.edit-comment-wrapper label textarea {
+    margin-top: 20px;
+}
+
+.controls-edit-comment {
+    margin-top: 30px;
+}

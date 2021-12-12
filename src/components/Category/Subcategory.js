@@ -37,7 +37,8 @@ export default function Subcategory({subCategories}) {
               </Link>
             </div>
             <div className="subcategory-pub-number">
-              <p>{Object.values(val.posts).length} posts</p>
+              {Object.values(val.posts).length > 1 && <p>{Object.values(val.posts).length} posts</p>}
+              {Object.values(val.posts).length <= 1 && <p>{Object.values(val.posts).length} post</p>}
             </div>
           </React.Fragment>
         ))}

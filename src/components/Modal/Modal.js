@@ -7,6 +7,7 @@ import { useModal } from "../../hooks/useModal";
 import CategoryCreate from "./CategoryCreate";
 import SubcategoryCreate from "./SubcategoryCreate";
 import PostEdit from "./PostEdit";
+import CommentEdit from "./CommentEdit";
 
 
 export default function Modal() {
@@ -20,6 +21,7 @@ export default function Modal() {
     editPost,
     createSubcategory,
     createCategory,
+    editComment,
   } = useModal();
 
 
@@ -35,6 +37,7 @@ export default function Modal() {
           {editPost && <PostEdit />}
           {createCategory && <CategoryCreate />}
           {createSubcategory && <SubcategoryCreate />}
+          {editComment && <CommentEdit />}
         </div>
       </div>
     );

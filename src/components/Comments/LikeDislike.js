@@ -47,13 +47,13 @@ export default function LikeDislike({comment}) {
     return (
       <>
         <div className="comment-like">
-          <Link to="#" onClick={clickLikeHandler}>
+          <Link className="like" to="#" onClick={clickLikeHandler}>
             <i className="far fa-thumbs-up"></i>
           </Link>
           <p className="comment-like-dislike-counter">{comment.likes.length}</p>
         </div>
         <div className="comment-like comment-dislike">
-          <Link to="#" onClick={clickDislikesHandler}>
+          <Link className="dislike" to="#" onClick={clickDislikesHandler}>
             <i className="far fa-thumbs-down"></i>
           </Link>
           <p className="comment-like-dislike-counter">

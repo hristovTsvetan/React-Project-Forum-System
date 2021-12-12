@@ -7,7 +7,7 @@ import LikeDislike from "./LikeDislike";
 import { useModal } from "../../hooks/useModal";
 
 export default function Comment({comment}) {
-  const {deleteCommentAction} = useModal();
+  const {deleteCommentAction, editCommentAction} = useModal();
 
   return (
     <>
@@ -26,19 +26,37 @@ export default function Comment({comment}) {
             </p>
             <div className="comment-like-dislike">
               <LikeDislike comment={comment} />
-              <div className="delete-post">
+              {!comment.isFirstComment && (
+                <div className="delete-post">
+                  <Link
+                    to="#"
+                    onClick={() =>
+                      deleteCommentAction(true, {
+                        catId: comment.categoryId,
+                        subId: comment.subCategoryId,
+                        postId: comment.postId,
+                        commentId: comment.id,
+                      })
+                    }
+                  >
+                    <i className="fas fa-trash"></i>
+                  </Link>
+                </div>
+              )}
+              <div className="edit-comment">
                 <Link
                   to="#"
-                  onClick={() =>
-                    deleteCommentAction(true, {
-                      catId: comment.categoryId,
-                      subId: comment.subCategoryId,
-                      postId: comment.postId,
+                  onClick={() => {
+                    editCommentAction(true, {
+                      comment: comment.content,
                       commentId: comment.id,
-                    })
-                  }
+                      catId: comment.categoryId,
+                      subCatId: comment.subCategoryId,
+                      postId: comment.postId,
+                    });
+                  }}
                 >
-                  <i className="fas fa-trash"></i>
+                  <i className="fas fa-edit"></i>
                 </Link>
               </div>
             </div>

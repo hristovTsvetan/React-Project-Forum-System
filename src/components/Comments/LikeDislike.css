@@ -1,0 +1,7 @@
+a.like:hover {
+    color: blue;
+}
+
+a.dislike:hover {
+    color: red;
+}
