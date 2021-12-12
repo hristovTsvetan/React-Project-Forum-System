@@ -60,6 +60,13 @@ const modalReducer = (state, action) => {
             }
             return {...state, deletePost: action.payload, modal: false};
         }
+        case 'DELETE_COMMENT':
+        {
+            if(action.payload === true) {
+                return {...state, deleteComment: action.payload, modal: true}
+            }
+            return {...state, deleteComment: action.payload, modal: false};
+        }
         case 'CREATE_POST':
         {
             if(action.payload === true) {
@@ -78,6 +85,7 @@ const modalReducer = (state, action) => {
 
 export function ModalProvider({ children }) {
     const [state, dispatch] = useReducer(modalReducer, {
+        deleteComment: false,
         deleteCategory: false,
         editCategory: false,
         deleteSubcategory: false,
@@ -129,6 +137,11 @@ export function ModalProvider({ children }) {
         dispatch({type: "DELETE_POST", payload: deletePost});
     }
 
+    const deleteCommentAction = (deleteComment, id) => {
+        dispatch({type: 'SET_ID', payload: id});
+        dispatch({type: "DELETE_COMMENT", payload: deleteComment});
+    }
+
     const createPostAction = (createPost) => {
         dispatch({type: "CREATE_POST", payload: createPost});
     }
@@ -145,7 +158,8 @@ export function ModalProvider({ children }) {
           createSubcategoryAction,
           createPostAction,
           deletePostAction,
-          editPostAction
+          editPostAction,
+          deleteCommentAction,
         }}
       >
         {children}

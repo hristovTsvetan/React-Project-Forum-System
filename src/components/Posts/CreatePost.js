@@ -44,6 +44,8 @@ export default function CreatePost() {
                     content: commentContent,
                     likes: [],
                     dislikes: [],
+                    uid: user.uid,
+                    isFirstComment: true,
                 }
             }
         } }; 

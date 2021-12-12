@@ -22,43 +22,43 @@ function App() {
 
   return (
     <div className="App">
-      {isAuthReady && <>
-        {modal && <Modal />}
+      {isAuthReady && (
+        <BrowserRouter>
+          {modal && <Modal />}
           <div className="wrapper">
-            <BrowserRouter>
-              <Header />
-              <AdminPanel />
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route path="/login">
-                  {!user && <Login />}
-                  {user && <Redirect to="/" />}
-                </Route>
-                <Route path="/signup">
-                  {!user && <Signup />}
-                  {user && <Redirect to="/" />}
-                </Route>
-                <Route path="/posts/:categoryid/:subcategoryid">
-                  <Posts />
-                </Route>
-                <Route path="/comments/:catId/:subId/:postId">
-                  <Comments />
-                </Route>
-                <Route path="/CreatePost/:categoryid/:subcategoryid">
-                  {user && <CreatePost />}
-                  {!user && <Redirect to="/" />}
-                </Route>
-                <Route path="/CreateComment/:categoryid/:subcategoryid/:postId">
-                  {user && <CreateComment />}
-                  {!user && <Redirect to="/" />}
-                </Route>
-              </Switch>
-            </BrowserRouter>
+            <Header />
+            <AdminPanel />
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/login">
+                {!user && <Login />}
+                {user && <Redirect to="/" />}
+              </Route>
+              <Route path="/signup">
+                {!user && <Signup />}
+                {user && <Redirect to="/" />}
+              </Route>
+              <Route path="/posts/:categoryid/:subcategoryid">
+                <Posts />
+              </Route>
+              <Route path="/comments/:catId/:subId/:postId">
+                <Comments />
+              </Route>
+              <Route path="/CreatePost/:categoryid/:subcategoryid">
+                {user && <CreatePost />}
+                {!user && <Redirect to="/" />}
+              </Route>
+              <Route path="/CreateComment/:categoryid/:subcategoryid/:postId">
+                {user && <CreateComment />}
+                {!user && <Redirect to="/" />}
+              </Route>
+            </Switch>
           </div>
           <Footer />
-          </>}
+        </BrowserRouter>
+      )}
     </div>
   );
 }

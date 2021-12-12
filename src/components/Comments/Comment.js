@@ -3,10 +3,11 @@ import "./Comment.css";
 import avatarLogo from "./Assets/honda-avatar.svg";
 
 import { Link } from "react-router-dom";
-import { useUser } from "../../hooks/useUser";
+import LikeDislike from "./LikeDislike";
+import { useModal } from "../../hooks/useModal";
 
 export default function Comment({comment}) {
-  const {user} = useUser();
+  const {deleteCommentAction} = useModal();
 
   return (
     <>
@@ -20,22 +21,23 @@ export default function Comment({comment}) {
         </section>
         <section className="comment-content">
           <div className="comment-header">
-            <p className="comment-date">{comment.createdAt.toDate().toString()}</p>
+            <p className="comment-date">
+              {comment.createdAt.toDate().toString()}
+            </p>
             <div className="comment-like-dislike">
-              <div className="comment-like">
-                <Link to="#">
-                  <i className="far fa-thumbs-up"></i>
-                </Link>
-                <p className="comment-like-dislike-counter">{comment.likes.length}</p>
-              </div>
-              <div className="comment-like comment-dislike">
-                <Link to="#">
-                  <i className="far fa-thumbs-down"></i>
-                </Link>
-                <p className="comment-like-dislike-counter">{comment.dislikes.length}</p>
-              </div>
+              <LikeDislike comment={comment} />
               <div className="delete-post">
-                <Link to="#">
+                <Link
+                  to="#"
+                  onClick={() =>
+                    deleteCommentAction(true, {
+                      catId: comment.categoryId,
+                      subId: comment.subCategoryId,
+                      postId: comment.postId,
+                      commentId: comment.id,
+                    })
+                  }
+                >
                   <i className="fas fa-trash"></i>
                 </Link>
               </div>

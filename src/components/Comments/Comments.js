@@ -1,7 +1,8 @@
 import Comment from "./Comment";
+import Path from "../Path/Path";
 import {useDocument} from "../../hooks/useDocument";
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
 
@@ -17,20 +18,16 @@ export default function Comments() {
   const [postName, setPostName] = useState('');
   const { user } = useUser();
 
+
+
   useEffect(() => {
 
     if(!isCanceled) {
-      document &&
-      setComments(
-        Object.values(
-          document.subCategories[subId].posts[postId].comments
-        ).sort((a, b) => b.createdAt.toDate() + a.createdAt.toDate())
-      );
-
       document && setCategoryName(document.title);
-      document && setSubCategoryName(document.subCategories[subId].subCategoryName);
-      document && setPostName(document.subCategories[subId].posts[postId].postTitle);
-      
+      document &&
+        setSubCategoryName(document.subCategories[subId].subCategoryName);
+      document &&
+        setPostName(document.subCategories[subId].posts[postId].postTitle);
     }
       return () => {
         setIsCanceled(true);
@@ -39,19 +36,26 @@ export default function Comments() {
 
     return (
       <>
-        <div className="post-header-wrapper">
-          <span className="category-title">{categoryName}</span>
-          <span className="category-subcategory-delimiter">/</span>
-          <span className="category-title">{subCategoryName}</span>
-          <span className="category-subcategory-delimiter">/</span>
-          <span className="category-title">{postName}</span>
-        </div>
-        {user && <div className="create-post-wrappper">
-          <Link to={`/CreateComment/${catId}/${subId}/${postId}`} className="add-comment">Add comment</Link>
-        </div>
-        }
+        <Path
+          categoryName={categoryName}
+          subCategoryName={subCategoryName}
+          postName={postName}
+        />
+        {user && (
+          <div className="create-post-wrappper">
+            <Link
+              to={`/CreateComment/${catId}/${subId}/${postId}`}
+              className="add-comment"
+            >
+              Add comment
+            </Link>
+          </div>
+        )}
         <section className="comments-wrapper">
-          {comments && comments.map((com) => <Comment key={com.id} comment={com} />)}
+          {document &&
+            Object.values(document.subCategories[subId].posts[postId].comments)
+              .sort((a, b) => a.createdAt.toDate() - b.createdAt.toDate())
+              .map((com) => <Comment key={com.id} comment={com} />)}
         </section>
       </>
     );

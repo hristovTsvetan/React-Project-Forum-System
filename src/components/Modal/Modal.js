@@ -14,6 +14,7 @@ export default function Modal() {
     deleteCategory,
     deleteSubcategory,
     deletePost,
+    deleteComment,
     editCategory,
     editSubcategory,
     editPost,
@@ -28,6 +29,7 @@ export default function Modal() {
           {deleteCategory && <Delete />}
           {deleteSubcategory && <Delete />}
           {deletePost && <Delete />}
+          {deleteComment && <Delete />}
           {editCategory && <CategoryEdit />}
           {editSubcategory && <SubcategoryEdit />}
           {editPost && <PostEdit />}

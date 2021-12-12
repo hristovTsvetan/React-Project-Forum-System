@@ -4,6 +4,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 import uniqid from 'uniqid';
 import { timestamp } from '../../firebase/config';
 import { useUser } from "../../hooks/useUser";
+import Path from "../Path/Path";
 
 export default function CreateComment() {
     const [commentBody, setCommentBody] = useState('');
@@ -35,6 +36,7 @@ export default function CreateComment() {
                 subCategoryId: subcategoryid,
                 userAvatar: 'picture',
                 uid: user.uid,
+                isFirstComment: false,
             }
         }
 
@@ -71,13 +73,7 @@ export default function CreateComment() {
 
     return (
         <>
-        <div className="post-header-wrapper">
-          <span className="category-title">{categoryName}</span>
-          <span className="category-subcategory-delimiter">/</span>
-          <span className="category-title">{subCategoryName}</span>
-          <span className="category-subcategory-delimiter">/</span>
-          <span className="category-title">{postName}</span>
-        </div>
+    	<Path categoryName={categoryName} subCategoryName={subCategoryName} postName={postName}/>
         <form className="login-form create-post" onSubmit={handleSubmit}>
           <span className="form-header-title">New Comment</span>
           <label>
