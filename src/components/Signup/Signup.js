@@ -9,14 +9,43 @@ export default function Signup() {
     const[password, setPassword] = useState('');
     const[displayName, setDisplayName] = useState('');
     const[repeatPassword, setRepeatPassword] = useState('');
-    const[avatar, setAvatar] = useState('');
+    const[avatar, setAvatar] = useState(null);
+    const[avatarError, setAvatarError] = useState('');
     const {signup, error, isPending} = useSignup();
 
     const handleSubmit = async (e) => {
       e.preventDefault();
 
-      signup(email, password, displayName, repeatPassword);
+      if(!avatar) {
+        setAvatarError('Please select a file.');
+        return;
+      }
+
+      signup(email, password, displayName, repeatPassword, avatar);
       
+    }
+
+    const handleFileChange = (e) => {
+      setAvatar(null);
+      let curFile = e.target.files[0];
+      
+      if(!curFile) {
+        setAvatarError('Please select a file.');
+        return;
+      }
+
+      if(!curFile.type.includes('image')) {
+        setAvatarError('Selected file must be image!');
+        return;
+      }
+
+      if(curFile.size > 300000) {
+        setAvatarError('Size on image must be max 300kb!');
+        return;
+      }
+
+      setAvatarError(null);
+      setAvatar(curFile);
     }
 
 
@@ -82,14 +111,14 @@ export default function Signup() {
           <div className="input-form-wrapper">
             <input
               type="file"
-              onChange={(e) => setAvatar(e.currentTarget.value)}
-              value={avatar}
+              onChange={handleFileChange}
             />
           </div>
         </label>
         {isPending && <button className="register-button" disabled>Loading...</button>}
         {!isPending && <button className="register-button">Register</button>}
         {error && <p className="error">{error}</p>}
+        {avatarError && <p className="error">{avatarError}</p>}
       </form>
     );
 

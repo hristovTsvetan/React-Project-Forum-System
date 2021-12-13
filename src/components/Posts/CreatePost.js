@@ -36,7 +36,7 @@ export default function CreatePost() {
                 [commentId]: {
                     createdAt,
                     owner: user.displayName,
-                    userAvatar: 'picture',
+                    userAvatar: user.photoURL,
                     id: commentId,
                     postId: postId,
                     subCategoryId: subcategoryid,

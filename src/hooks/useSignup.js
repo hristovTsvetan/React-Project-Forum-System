@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { authObj } from "../firebase/config";
 import { useUser } from "./useUser";
+import { firebaseStorage } from "../firebase/config";
 
 export const useSignup = () => {
     const [error, setError] = useState(null);
@@ -9,7 +10,7 @@ export const useSignup = () => {
     //for cleanup function
     const [isCanceled, setIsCanceled] = useState(false);
 
-    const signup = async (email, password, displayName, repeatPassword) => {
+    const signup = async (email, password, displayName, repeatPassword, thumbnail) => {
         setError(null);
         setIsPending(true);
 
@@ -25,7 +26,12 @@ export const useSignup = () => {
                 throw new Error("Signup fail!");
             }
 
-            await response.user.updateProfile({displayName});
+            //upload user thumbnail
+            const uploadPath = `thumbnails/${response.user.uid}/${thumbnail.name}`;
+            const img = await firebaseStorage.ref(uploadPath).put(thumbnail);
+            const imgUrl = await img.ref.getDownloadURL();
+
+            await response.user.updateProfile({displayName, photoURL: imgUrl});
 
             //dispatch login action
             loginAction(response.user);

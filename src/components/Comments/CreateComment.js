@@ -34,7 +34,7 @@ export default function CreateComment() {
                 owner: user.displayName,
                 postId: postId,
                 subCategoryId: subcategoryid,
-                userAvatar: 'picture',
+                userAvatar: user.photoURL,
                 uid: user.uid,
                 isFirstComment: false,
             }

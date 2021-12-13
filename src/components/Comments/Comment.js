@@ -9,13 +9,15 @@ import { useModal } from "../../hooks/useModal";
 export default function Comment({comment}) {
   const {deleteCommentAction, editCommentAction} = useModal();
 
+  console.log(comment.userAvatar);
+
   return (
     <>
       <article className="comment-wrapper">
         <section className="comment-user-info">
           <h4>{comment.owner}</h4>
           <div className="comment-avatar-wrapper">
-            <img src={avatarLogo} alt="User avatar" />
+            <img src={comment.userAvatar} alt="User avatar" />
           </div>
           <p className="comment-user-role">User</p>
         </section>

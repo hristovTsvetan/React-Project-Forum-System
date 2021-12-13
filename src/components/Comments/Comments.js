@@ -18,7 +18,7 @@ export default function Comments() {
   const [postName, setPostName] = useState('');
   const { user } = useUser();
 
-
+  console.log(user.photoURL);
 
   useEffect(() => {
 
