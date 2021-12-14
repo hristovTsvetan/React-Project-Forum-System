@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from '../../hooks/useModal';
 import { useFirestore } from '../../hooks/useFirestore';
 import './CategoryEdit.css';
@@ -8,13 +8,17 @@ export default function CategoryEdit() {
     const [newCategoryName, setNewCategoryName] = useState('');
     const {editCategoryAction, itemId} = useModal();
     const {updateDocument} = useFirestore('categories');
+
+    useEffect(() => {
+      setNewCategoryName(itemId.catName);
+    }, [itemId.catName])
     
 
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        updateDocument(itemId, {title: newCategoryName});
+        updateDocument(itemId.id, {title: newCategoryName});
 
         editCategoryAction(false, null);
     };
@@ -23,7 +27,7 @@ export default function CategoryEdit() {
       <form className="category-edit" onSubmit={submitHandler}>
         <label>
           <div>
-            <span>New category name:</span>
+            <span>Edit category name:</span>
           </div>
           <div>
             <input

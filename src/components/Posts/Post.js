@@ -30,6 +30,7 @@ export default function Post({postInfo}) {
                     catId: postInfo.categoryId,
                     subId: postInfo.subCategoryId,
                     id: postInfo.id,
+                    postTitle: postInfo.postTitle,
                   })
                 }
               >

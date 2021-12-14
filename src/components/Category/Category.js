@@ -16,7 +16,12 @@ export default function Category({category}) {
             <div className="admin-category-wrapper">
               <Link
                 to="/"
-                onClick={() => editCategoryAction(true, category.id)}
+                onClick={() =>
+                  editCategoryAction(true, {
+                    id: category.id,
+                    catName: category.title,
+                  })
+                }
               >
                 <i className="fas fa-edit"></i>
               </Link>

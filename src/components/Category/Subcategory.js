@@ -32,8 +32,10 @@ export default function Subcategory({subCategories}) {
                   to="/"
                   onClick={() =>
                     editSubCategoryAction(true, {
-                      parentId: val.parentId,
                       id: val.id,
+                      subCatName: val.subCategoryName,
+                      subCatDesc: val.subCategoryDescription,
+                      parentId: val.parentId,
                     })
                   }
                 >

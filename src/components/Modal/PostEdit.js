@@ -5,24 +5,11 @@ import { useFirestore } from "../../hooks/useFirestore";
 export default function PostEdit() {
 
     const [newPostName, setNewPostName] = useState('');
-    const [currentTitle, setCurrentTitle] = useState('');
     const {editPostAction, itemId} = useModal();
     const {getDocument, updateDocument} = useFirestore('categories');
     
     useEffect(() => {
-
-      const getData = async () => {
-        if(itemId) {
-          const curCategory = await getDocument(itemId.catId);
-          const curSubCategory = curCategory.subCategories[itemId.subId];
-          const curPost = curSubCategory.posts[itemId.id];
-
-          setCurrentTitle(curPost.postTitle);
-        }
-        
-      };
-
-      getData();   
+      setNewPostName(itemId.postTitle);
 
     }, [])
 
@@ -45,15 +32,7 @@ export default function PostEdit() {
         <form className="category-edit" onSubmit={submitHandler}>
         <label>
           <div>
-            <span>Current post title:</span>
-          </div>
-          <div>
-            <p>{currentTitle}</p>
-          </div>
-        </label>
-        <label>
-          <div>
-            <span>New post title:</span>
+            <span>Edit post title:</span>
           </div>
           <div>
             <input

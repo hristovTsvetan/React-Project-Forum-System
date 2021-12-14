@@ -55,7 +55,7 @@ function App() {
                 {user && <CreateComment />}
                 {!user && <Redirect to="/" />}
               </Route>
-              <Route path="/Profile/:userId">
+              <Route path="/Profile">
                 {user && <Profile user={user}/>}
                 {!user && <Redirect to="/" />}
               </Route>

@@ -37,7 +37,7 @@ export default function Header() {
           <>
             <li>Welcome {user.displayName}</li>
             <li>
-              <Link to="/Profile/:id">Profile</Link>
+              <Link to="/Profile">Profile</Link>
             </li>
             <li>
               <Link to="/" onClick={logout}>

@@ -1,32 +1,18 @@
 import './SubcategoryEdit.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from '../../hooks/useModal';
 import { useFirestore } from '../../hooks/useFirestore';
-import { useEffect } from 'react/cjs/react.development';
 
 export default function SubcategoryEdit() {
     const [newSubcategoryName, setNewSubcategoryName] = useState('');
     const [newSubcategoryDescription, setNewSubcategoryDescription] = useState('');
-    const [currentTitle, setCurrentTitle] = useState('');
-    const [currentDescription, setCurrentDescription] = useState('');
     const {editSubCategoryAction, itemId} = useModal();
     const {getDocument, updateDocument} = useFirestore('categories');
 
     useEffect(() => {
-
-      const getData = async () => {
-        if(itemId) {
-          const curCategory = await getDocument(itemId.parentId);
-          const curSubCategory = curCategory.subCategories[itemId.id];
-          setCurrentTitle(curSubCategory.subCategoryName);
-          setCurrentDescription(curSubCategory.subCategoryDescription);
-        }
-        
-      };
-
-      getData();   
-
+      	setNewSubcategoryName(itemId.subCatName);
+        setNewSubcategoryDescription(itemId.subCatDesc)
     }, [])
 
 
@@ -50,23 +36,7 @@ export default function SubcategoryEdit() {
       <form className="category-edit" onSubmit={submitHandler}>
         <label>
           <div>
-            <span>Current subcategory name:</span>
-          </div>
-          <div>
-            <p>{currentTitle}</p>
-          </div>
-        </label>
-        <label>
-          <div>
-            <span>Current subcategory description:</span>
-          </div>
-          <div>
-            <p>{currentDescription}</p>
-          </div>
-        </label>
-        <label>
-          <div>
-            <span>New subcategory name:</span>
+            <span>Edit subcategory name:</span>
           </div>
           <div>
             <input
@@ -79,7 +49,7 @@ export default function SubcategoryEdit() {
         </label>
         <label>
           <div>
-            <span>New description:</span>
+            <span>Edit description:</span>
           </div>
           <div>
             <textarea
