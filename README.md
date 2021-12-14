@@ -5,7 +5,7 @@ Regular forum system based on technologies:
 * Backend is firebase, including auth, firestore and file storage services.
 
 ## Features
-* Core user content in the forum system is loaded in categories, subcategories, posts and comments. Over the registration user can upload and avatar as image, which will be loaded on any post where the user has a comment/s. Every comment have additional feature where any registered user can like or dislike selected comment, with this approach all readers can find fast valuable comments. Categories, subcategories, posts and comments are rendered on frontend in real time.
+ Core user content in the forum system is loaded in categories, subcategories, posts and comments. Over the registration user can upload and avatar as image, which will be loaded on any post where the user has a comment/s. Every comment have additional feature where any registered user can like or dislike selected comment, with this approach all readers can find fast valuable comments. Categories, subcategories, posts and comments are rendered on frontend in real time.
 
 ## Available user roles:
 * Guest - user who don't have registration in the forum.
