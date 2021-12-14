@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useUser } from "./useUser";
 import { authObj } from "../firebase/config";
+import { useFirestore } from "./useFirestore";
 
 export function useLogout() {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false)
-    const {logoutAction} = useUser();
+    const {logoutAction, user} = useUser();
+    const {updateDocument} = useFirestore('users');
     //for cleanup function
     const [isCanceled, setIsCanceled] = useState(false);
 
@@ -15,6 +17,8 @@ export function useLogout() {
 
         try{
             await authObj.signOut();
+
+            await updateDocument(user.uid, {online: false});
 
             //dispatch
             logoutAction();

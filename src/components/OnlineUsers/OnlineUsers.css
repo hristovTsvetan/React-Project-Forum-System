@@ -1,0 +1,17 @@
+.online-users-wrapper {
+    width: 100%;
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 7px;
+    box-shadow: 4px 4px 7px 0px #888888;
+}
+
+.online-users-wrapper p {
+    margin: 10px auto;
+}
+
+.ul-online-users-wrapper {
+    font-size: 0.8em;
+    display: flex;
+    flex-wrap: wrap;
+}

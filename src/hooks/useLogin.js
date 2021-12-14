@@ -9,7 +9,7 @@ export function useLogin() {
     const {loginAction} = useUser();
     //for cleanup function
     const [isCanceled, setIsCanceled] = useState(false);
-    const {getDocument} = useFirestore('users');
+    const {getDocument, updateDocument} = useFirestore('users');
 
     const login = async (email, password) => {
         setError(null);
@@ -23,6 +23,8 @@ export function useLogin() {
             }
 
             const userDb = await getDocument(res.user.uid);
+
+            await updateDocument(res.user.uid, {online: true});
 
             //dispatch
             loginAction({...res.user, role: userDb.role});

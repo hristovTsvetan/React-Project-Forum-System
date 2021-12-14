@@ -39,10 +39,11 @@ export const useSignup = () => {
                 displayName,
                 id: response.user.uid,
                 photoURL: imgUrl,
+                online: true,
             });
 
             //dispatch login action
-            loginAction({...response.user, role: 'user', photoURL: imgUrl,});
+            loginAction({...response.user, role: 'user', photoURL: imgUrl});
 
             if(!isCanceled) {
                 setIsPending(false);
