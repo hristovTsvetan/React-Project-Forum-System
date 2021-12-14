@@ -49,9 +49,6 @@ export default function Delete() {
             deletePostAction(false, null);
         }
         else if(deleteComment) {
-            const categoryId = itemId.catId;
-            const subCategoryId = itemId.subId;
-            const postId = itemId.postId;
             
             const origDoc = await getDocument(itemId.catId);
 

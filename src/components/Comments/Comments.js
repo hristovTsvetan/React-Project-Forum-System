@@ -2,14 +2,15 @@ import Comment from "./Comment";
 import Path from "../Path/Path";
 import {useDocument} from "../../hooks/useDocument";
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
 
 import "./Comments.css";
+import { useFirestore } from "../../hooks/useFirestore";
 
 export default function Comments() {
-  const [comments, setComments] = useState(null);
+  const [dbUsers, setDbUsers] = useState(null);
   const {catId, subId, postId} = useParams();
   const {document, error} = useDocument('categories', catId);
   const [isCanceled, setIsCanceled] = useState(false);
@@ -17,6 +18,20 @@ export default function Comments() {
   const [subCategoryName, setSubCategoryName] = useState('');
   const [postName, setPostName] = useState('');
   const { user } = useUser();
+  const {getDocuments} = useFirestore('users');
+  const _getDocuments = useRef(getDocuments).current;
+  
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const result =  await _getDocuments();
+      setDbUsers(result);
+    }
+    
+    fetchData();
+    
+  }, [_getDocuments])
 
   useEffect(() => {
 
@@ -27,6 +42,7 @@ export default function Comments() {
       document &&
         setPostName(document.subCategories[subId].posts[postId].postTitle);
     }
+
       return () => {
         setIsCanceled(true);
       }
@@ -53,7 +69,7 @@ export default function Comments() {
           {document &&
             Object.values(document.subCategories[subId].posts[postId].comments)
               .sort((a, b) => a.createdAt.toDate() - b.createdAt.toDate())
-              .map((com) => <Comment key={com.id} comment={com} />)}
+              .map((com) => <Comment key={com.id} comment={com} dbUsers={dbUsers}/>)}
         </section>
       </>
     );

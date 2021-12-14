@@ -38,10 +38,11 @@ export const useSignup = () => {
                 role: 'user',
                 displayName,
                 id: response.user.uid,
+                photoURL: imgUrl,
             });
 
             //dispatch login action
-            loginAction({...response.user, role: 'user'});
+            loginAction({...response.user, role: 'user', photoURL: imgUrl,});
 
             if(!isCanceled) {
                 setIsPending(false);

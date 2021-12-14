@@ -10,6 +10,8 @@ const userReducer = (state, action) => {
         return { ...state, user: action.payload };
       case "LOGOUT":
         return { ...state, user: action.payload };
+      case "UPDATE_USER":
+        return { ...state, user: action.payload };
       case "AUTH_IS_READY":
         return { ...state, user: action.payload, isAuthReady: true };
       default:
@@ -26,6 +28,10 @@ export function UserProvider({children}) {
     });
 
     console.log('User context state is:', state);
+
+    const updateAction = (user) => {
+      dispatch({type: 'UPDATE_USER', payload: user});
+  };
 
     const loginAction = (user) => {
         dispatch({type: 'LOGIN', payload: user});
@@ -44,7 +50,7 @@ export function UserProvider({children}) {
            
           const getRole = async () => {
             const curUser = await getDocument(user.uid);
-            const userRole = curUser.role;
+            const userRole = curUser?.role;
             authIsReady({...user, role: userRole});
           }
 
@@ -60,7 +66,7 @@ export function UserProvider({children}) {
 
 
     return (
-      <UserContext.Provider value={{ ...state, loginAction, logoutAction }}>
+      <UserContext.Provider value={{ ...state, loginAction, logoutAction, updateAction }}>
         {children}
       </UserContext.Provider>
     );

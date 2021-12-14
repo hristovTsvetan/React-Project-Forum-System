@@ -99,6 +99,16 @@ export const useFirestore = (collection) => {
         }
     }
 
+    const getDocuments = async () => {
+      const document = await ref.get();
+
+      const data = {};
+
+      document.forEach(doc => { data[doc.id] = doc.data() });
+
+      return data;
+    }
+
     const updateDocument = async (id, updates) => {
         dispatch({type: 'IS_PENDING'});
 
@@ -118,5 +128,5 @@ export const useFirestore = (collection) => {
         }
     }, [])
 
-    return {addDocument, deleteDocument, getDocument, updateDocument, response};
+    return {addDocument, deleteDocument, getDocument, getDocuments, updateDocument, response};
 }

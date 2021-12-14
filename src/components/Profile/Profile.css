@@ -1,0 +1,25 @@
+.profile-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.upd-button, .loadingBtn{
+    margin-right: 20px;
+}
+
+button.loadingBtn:hover {
+    background-color: gray;
+}
+
+.profile-img-wrapper {
+    width:100%;
+    text-align: center;   
+    margin-top: 25px;
+    border-radius: 50%;
+}
+
+.profile-img-wrapper img {
+    width: 20%;
+    border-radius: 50%;
+    object-fit:contain;
+}

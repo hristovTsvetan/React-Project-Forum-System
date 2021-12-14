@@ -5,20 +5,19 @@ import { Link } from "react-router-dom";
 import LikeDislike from "./LikeDislike";
 import { useModal } from "../../hooks/useModal";
 
-export default function Comment({comment}) {
+export default function Comment({comment, dbUsers}) {
   const {deleteCommentAction, editCommentAction} = useModal();
   const {user} = useUser();
-  
 
   return (
     <>
       <article className="comment-wrapper">
         <section className="comment-user-info">
-          <h4>{comment.owner}</h4>
+          <h4>{dbUsers && dbUsers[comment.uid].displayName}</h4>
           <div className="comment-avatar-wrapper">
-            <img src={comment.userAvatar} alt="User avatar" />
+            <img src={dbUsers && dbUsers[comment.uid].photoURL} alt="User avatar" />
           </div>
-          <p className="comment-user-role">User</p>
+          <p className="comment-user-role">{dbUsers && dbUsers[comment.uid].role}</p>
         </section>
         <section className="comment-content">
           <div className="comment-header">

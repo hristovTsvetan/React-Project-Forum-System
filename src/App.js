@@ -15,6 +15,7 @@ import Modal from "./components/Modal/Modal";
 import { useUser } from "./hooks/useUser";
 import CreatePost from "./components/Posts/CreatePost";
 import CreateComment from "./components/Comments/CreateComment";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const {modal} = useModal();
@@ -52,6 +53,10 @@ function App() {
               </Route>
               <Route path="/CreateComment/:categoryid/:subcategoryid/:postId">
                 {user && <CreateComment />}
+                {!user && <Redirect to="/" />}
+              </Route>
+              <Route path="/Profile/:userId">
+                {user && <Profile user={user}/>}
                 {!user && <Redirect to="/" />}
               </Route>
             </Switch>

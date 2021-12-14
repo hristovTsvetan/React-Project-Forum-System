@@ -1,11 +1,11 @@
 import "./CommentEdit.css"
 
-import { useState} from "react";
+import { useState, useEffect} from "react";
 import { useModal } from "../../hooks/useModal";
 import { useFirestore } from "../../hooks/useFirestore";
 
 export default function CommentEdit() {
-    const [newContent, setNewContent] = useState(null);
+    const [newContent, setNewContent] = useState('');
     const {itemId, editCommentAction} = useModal();
     const {getDocument, updateDocument} = useFirestore('categories');
     const [categoryId, setCategoryId] = useState('');
@@ -13,15 +13,20 @@ export default function CommentEdit() {
     const [postId, setPostId] = useState('');
     const [commentId, setCommentId] = useState('');
 
+    useEffect(() => {
+      setNewContent(itemId?.comment);
+    }, [itemId?.comment])
+
+    useEffect(() => {
+      setCategoryId(itemId.catId);
+      setSubCatId(itemId.subCatId);
+      setPostId(itemId.postId);
+      setCommentId(itemId.commentId);
+    }, [itemId.postId])
 
     const onChangeHandler = (e) => {
         setNewContent(e.currentTarget.value);
-        !categoryId && setCategoryId(itemId.catId);
-        !subCatId && setSubCatId(itemId.subCatId);
-        !postId && setPostId(itemId.postId);
-        !commentId && setCommentId(itemId.commentId);
-
-        itemId.comment && editCommentAction(true, {comment: null});
+        //itemId.comment && editCommentAction(true, {comment: null});
     }
 
     const submitHandler = async (e) => {
@@ -45,7 +50,7 @@ export default function CommentEdit() {
             cols="30"
             rows="10"
             onChange={onChangeHandler}
-            value={itemId?.comment !== null ? itemId.comment : newContent}
+            value={newContent}
             required
           ></textarea>
         </label>

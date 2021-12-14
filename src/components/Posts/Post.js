@@ -8,8 +8,6 @@ export default function Post({postInfo}) {
   const {deletePostAction, editPostAction} = useModal();
   const {user} = useUser();
 
-    console.log(user);
-
     return (
       <>
         <div className="post-title-wrapper">
