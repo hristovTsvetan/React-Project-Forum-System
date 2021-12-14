@@ -2,7 +2,7 @@ import Comment from "./Comment";
 import Path from "../Path/Path";
 import {useDocument} from "../../hooks/useDocument";
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
 
@@ -17,8 +17,6 @@ export default function Comments() {
   const [subCategoryName, setSubCategoryName] = useState('');
   const [postName, setPostName] = useState('');
   const { user } = useUser();
-
-  console.log(user.photoURL);
 
   useEffect(() => {
 

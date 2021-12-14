@@ -1,15 +1,14 @@
 import "./Comment.css";
 
-import avatarLogo from "./Assets/honda-avatar.svg";
-
+import { useUser } from "../../hooks/useUser";
 import { Link } from "react-router-dom";
 import LikeDislike from "./LikeDislike";
 import { useModal } from "../../hooks/useModal";
 
 export default function Comment({comment}) {
   const {deleteCommentAction, editCommentAction} = useModal();
-
-  console.log(comment.userAvatar);
+  const {user} = useUser();
+  
 
   return (
     <>
@@ -27,8 +26,8 @@ export default function Comment({comment}) {
               {comment.createdAt.toDate().toString()}
             </p>
             <div className="comment-like-dislike">
-              <LikeDislike comment={comment} />
-              {!comment.isFirstComment && (
+              {user && <LikeDislike comment={comment} />}
+              {!comment.isFirstComment && user && user.role === 'admin' &&
                 <div className="delete-post">
                   <Link
                     to="#"
@@ -44,23 +43,25 @@ export default function Comment({comment}) {
                     <i className="fas fa-trash"></i>
                   </Link>
                 </div>
+              }
+              {user && (comment.uid === user.uid || user.role === "admin") && (
+                <div className="edit-comment">
+                  <Link
+                    to="#"
+                    onClick={() => {
+                      editCommentAction(true, {
+                        comment: comment.content,
+                        commentId: comment.id,
+                        catId: comment.categoryId,
+                        subCatId: comment.subCategoryId,
+                        postId: comment.postId,
+                      });
+                    }}
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Link>
+                </div>
               )}
-              <div className="edit-comment">
-                <Link
-                  to="#"
-                  onClick={() => {
-                    editCommentAction(true, {
-                      comment: comment.content,
-                      commentId: comment.id,
-                      catId: comment.categoryId,
-                      subCatId: comment.subCategoryId,
-                      postId: comment.postId,
-                    });
-                  }}
-                >
-                  <i className="fas fa-edit"></i>
-                </Link>
-              </div>
             </div>
           </div>
           <div className="comment-body">

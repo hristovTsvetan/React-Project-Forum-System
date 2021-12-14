@@ -1,6 +1,7 @@
 section.admin-header {
     background-color: var(--background-color);
-    border: 2px solid red;
+    border: 2px solid #3d3232;
+    box-shadow: 4px 4px 7px 0px #888888;
     border-radius: 8px;
     margin-top: 20px;
     padding: 20px 0px;

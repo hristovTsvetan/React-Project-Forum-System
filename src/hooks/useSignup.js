@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { authObj } from "../firebase/config";
+import { authObj, firestoreObj } from "../firebase/config";
 import { useUser } from "./useUser";
 import { firebaseStorage } from "../firebase/config";
 
@@ -33,8 +33,15 @@ export const useSignup = () => {
 
             await response.user.updateProfile({displayName, photoURL: imgUrl});
 
+            //create user document
+            await firestoreObj.collection('users').doc(response.user.uid).set({
+                role: 'user',
+                displayName,
+                id: response.user.uid,
+            });
+
             //dispatch login action
-            loginAction(response.user);
+            loginAction({...response.user, role: 'user'});
 
             if(!isCanceled) {
                 setIsPending(false);

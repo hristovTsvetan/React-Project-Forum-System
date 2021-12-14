@@ -3,9 +3,11 @@ import "./Subcategory.css";
 import { Link } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
 import React from "react";
+import { useUser } from "../../hooks/useUser";
 
 export default function Subcategory({subCategories}) {
   const {deleteSubCategoryAction, editSubCategoryAction} = useModal();
+  const {user} = useUser();
 
   return (
     <>
@@ -24,21 +26,43 @@ export default function Subcategory({subCategories}) {
                 </p>
               </div>
             </Link>
-            <div className="subcategory-icons">
-              <Link to="/" onClick={() => editSubCategoryAction(true, {parentId: val.parentId, id: val.id})}>
-                <div className="edit-icon-wrapper">
-                  <i className="fas fa-edit"></i>
-                </div>
-              </Link>
-              <Link to="/" onClick={() => deleteSubCategoryAction(true, {parentId: val.parentId, id: val.id})}>
-                <div className="delet-icon-wrapper">
-                  <i className="fas fa-trash-alt"></i>
-                </div>
-              </Link>
-            </div>
+            {user && user.role === "admin" && (
+              <div className="subcategory-icons">
+                <Link
+                  to="/"
+                  onClick={() =>
+                    editSubCategoryAction(true, {
+                      parentId: val.parentId,
+                      id: val.id,
+                    })
+                  }
+                >
+                  <div className="edit-icon-wrapper">
+                    <i className="fas fa-edit"></i>
+                  </div>
+                </Link>
+                <Link
+                  to="/"
+                  onClick={() =>
+                    deleteSubCategoryAction(true, {
+                      parentId: val.parentId,
+                      id: val.id,
+                    })
+                  }
+                >
+                  <div className="delet-icon-wrapper">
+                    <i className="fas fa-trash-alt"></i>
+                  </div>
+                </Link>
+              </div>
+            )}
             <div className="subcategory-pub-number">
-              {Object.values(val.posts).length > 1 && <p>{Object.values(val.posts).length} posts</p>}
-              {Object.values(val.posts).length <= 1 && <p>{Object.values(val.posts).length} post</p>}
+              {Object.values(val.posts).length > 1 && (
+                <p>{Object.values(val.posts).length} posts</p>
+              )}
+              {Object.values(val.posts).length <= 1 && (
+                <p>{Object.values(val.posts).length} post</p>
+              )}
             </div>
           </React.Fragment>
         ))}

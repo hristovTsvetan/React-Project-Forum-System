@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUser } from "./useUser";
 import { authObj } from "../firebase/config";
+import { useFirestore } from "./useFirestore";
 
 export function useLogin() {
     const [error, setError] = useState(null);
@@ -8,6 +9,7 @@ export function useLogin() {
     const {loginAction} = useUser();
     //for cleanup function
     const [isCanceled, setIsCanceled] = useState(false);
+    const {getDocument} = useFirestore('users');
 
     const login = async (email, password) => {
         setError(null);
@@ -19,8 +21,11 @@ export function useLogin() {
             if(!res) {
                 throw new Error('Something wrong with login!');
             }
+
+            const userDb = await getDocument(res.user.uid);
+
             //dispatch
-            loginAction(res.user);
+            loginAction({...res.user, role: userDb.role});
             
             if(!isCanceled) {
                 setIsPending(false);

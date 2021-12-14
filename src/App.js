@@ -27,7 +27,7 @@ function App() {
           {modal && <Modal />}
           <div className="wrapper">
             <Header />
-            <AdminPanel />
+            {user && user.role === 'admin' && <AdminPanel />}
             <Switch>
               <Route exact path="/">
                 <Home />

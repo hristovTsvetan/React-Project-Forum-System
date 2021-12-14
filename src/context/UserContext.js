@@ -1,5 +1,6 @@
 import { useReducer, createContext, useEffect } from "react";
 import { authObj } from "../firebase/config";
+import { useFirestore } from "../hooks/useFirestore";
 
 export const UserContext = createContext();
 
@@ -18,7 +19,7 @@ const userReducer = (state, action) => {
 
 
 export function UserProvider({children}) {
-
+    const {getDocument} = useFirestore('users');
     const [state, dispatch] = useReducer(userReducer, {
         user: null,
         isAuthReady: false,
@@ -39,9 +40,21 @@ export function UserProvider({children}) {
     }
 
     useEffect(() => {
-        const unsub = authObj.onAuthStateChanged((user) => {
+        const unsub = authObj.onAuthStateChanged(async (user) => {
+           
+          const getRole = async () => {
+            const curUser = await getDocument(user.uid);
+            const userRole = curUser.role;
+            authIsReady({...user, role: userRole});
+          }
+
+          if(user !== null) {
+            await getRole();
+          } else {
             authIsReady(user);
-            unsub();
+          }
+
+          unsub();
         })
     }, [])
 

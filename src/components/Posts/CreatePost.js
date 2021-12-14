@@ -32,6 +32,7 @@ export default function CreatePost() {
             categoryId: categoryid,
             createdAt,
             postTitle: postTile,
+            uid: user.uid,
             comments: {
                 [commentId]: {
                     createdAt,
