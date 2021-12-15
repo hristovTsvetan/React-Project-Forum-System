@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useFirestore } from '../../hooks/useFirestore';
 import { timestamp } from '../../firebase/config';
 import { useUser } from '../../hooks/useUser';
+import Path from '../Path/Path';
 import uniqid from 'uniqid';
 
 import './CreatePost.css';
@@ -75,11 +76,7 @@ export default function CreatePost() {
 
     return (
       <>
-        <div className="category-title-wrapper">
-          <span className="category-title">{categoryName}</span>
-          <span className="category-subcategory-delimiter">/</span>
-          <span className="category-title">{subCategoryName}</span>
-        </div>
+        <Path categoryName={categoryName} subCategoryName={subCategoryName} catId={categoryid} subCatId={subcategoryid}></Path>
         <form className="login-form create-post" onSubmit={handleSubmit}>
           <span className="form-header-title">New post</span>
           <label>

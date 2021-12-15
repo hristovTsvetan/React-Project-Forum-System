@@ -42,7 +42,12 @@ export default function Posts() {
     <>
       {document && (
         <>
-          <Path categoryName={categoryName} subCategoryName={subCategoryName} />
+          <Path
+            categoryName={categoryName}
+            subCategoryName={subCategoryName}
+            catId={categoryid}
+            subCatId={subcategoryid}
+          />
           {user && (
             <div className="add-post">
               <Link to={`/CreatePost/${categoryid}/${subcategoryid}`}>

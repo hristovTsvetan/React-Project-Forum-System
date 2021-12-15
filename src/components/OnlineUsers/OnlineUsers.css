@@ -4,14 +4,13 @@
     padding: 10px;
     border-radius: 7px;
     box-shadow: 4px 4px 7px 0px #888888;
+    border: 2px solid #3d3232;
+    font-size: 0.8em;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .online-users-wrapper p {
     margin: 10px auto;
-}
-
-.ul-online-users-wrapper {
-    font-size: 0.8em;
-    display: flex;
-    flex-wrap: wrap;
 }

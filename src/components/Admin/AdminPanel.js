@@ -16,9 +16,6 @@ export default function AdminPanel() {
         <li>
           <Link to="/" onClick={() => createSubcategoryAction(true)}>Create subcaregory</Link>
         </li>
-        <li>
-          <Link to="/users">Administrate users</Link>
-        </li>
       </ul>
     </section>
   );

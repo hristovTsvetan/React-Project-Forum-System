@@ -54,6 +54,9 @@ export default function Comments() {
           categoryName={categoryName}
           subCategoryName={subCategoryName}
           postName={postName}
+          catId={catId}
+          subCatId={subId}
+          postId={postId}
         />
         {user && (
           <div className="create-post-wrappper">

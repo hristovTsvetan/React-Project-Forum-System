@@ -72,8 +72,15 @@ export default function CreateComment() {
     }, [categoryid, subcategoryid, postId, getDocument])
 
     return (
-        <>
-    	<Path categoryName={categoryName} subCategoryName={subCategoryName} postName={postName}/>
+      <>
+        <Path
+          categoryName={categoryName}
+          subCategoryName={subCategoryName}
+          postName={postName}
+          catId={categoryid}
+          subCatId={subcategoryid}
+          postId={postId}
+        />
         <form className="login-form create-post" onSubmit={handleSubmit}>
           <span className="form-header-title">New Comment</span>
           <label>
@@ -93,5 +100,5 @@ export default function CreateComment() {
           <button>Create</button>
         </form>
       </>
-    )
+    );
 }
