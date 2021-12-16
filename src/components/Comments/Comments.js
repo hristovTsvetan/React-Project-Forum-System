@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
+import Pagination from "../Pagination/Pagination";
 
 import "./Comments.css";
 import { useFirestore } from "../../hooks/useFirestore";
@@ -20,18 +21,28 @@ export default function Comments() {
   const { user } = useUser();
   const {getDocuments} = useFirestore('users');
   const _getDocuments = useRef(getDocuments).current;
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const totalPages = document && Math.ceil(
+    Object.values(document.subCategories[subId].posts[postId].comments).length /
+      itemsPerPage
+  );
+
+  //when delete last comment from any poge
+  useEffect(() => {
+    document && totalPages < currentPage && setCurrentPage(totalPages);
+  }, [totalPages]);
 
   useEffect(() => {
-
     const fetchData = async () => {
-      const result =  await _getDocuments();
+      const result = await _getDocuments();
       setDbUsers(result);
-    }
-    
+    };
+
     fetchData();
-    
-  }, [_getDocuments])
+  }, [_getDocuments]);
 
   useEffect(() => {
 
@@ -39,14 +50,19 @@ export default function Comments() {
       document && setCategoryName(document.title);
       document &&
         setSubCategoryName(document.subCategories[subId].subCategoryName);
-      document &&
+        document &&
         setPostName(document.subCategories[subId].posts[postId].postTitle);
     }
 
       return () => {
         setIsCanceled(true);
       }
-  }, [document])
+  }, [document, totalPages]);
+
+
+  const handleCurrentPage = (curPage) => {
+    setCurrentPage(curPage);
+  }
 
     return (
       <>
@@ -72,7 +88,15 @@ export default function Comments() {
           {document &&
             Object.values(document.subCategories[subId].posts[postId].comments)
               .sort((a, b) => a.createdAt.toDate() - b.createdAt.toDate())
-              .map((com) => <Comment key={com.id} comment={com} dbUsers={dbUsers}/>)}
+              .slice(startIndex, startIndex + itemsPerPage)
+              .map((com) => (
+                <Comment key={com.id} comment={com} dbUsers={dbUsers} />
+              ))}
+          <Pagination
+            totalPages={totalPages}
+            handleCurrentPage={handleCurrentPage}
+            currentPage={currentPage}
+          />
         </section>
       </>
     );

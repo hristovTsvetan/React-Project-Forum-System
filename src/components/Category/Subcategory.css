@@ -61,3 +61,7 @@ p.subcategory-title {
 .subcategory-icons a i:hover{
     color: red;
 }
+
+div.edit-icon-wrapper i:hover {
+    color: orange;
+}

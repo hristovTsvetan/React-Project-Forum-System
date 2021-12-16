@@ -31,3 +31,8 @@
     cursor: pointer;
     font-size: 0.9em;
 }
+
+.pagination-wrapper {
+    text-align: center;
+    padding-top: 20px;
+}

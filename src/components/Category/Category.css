@@ -31,3 +31,7 @@
 .admin-category-wrapper a:hover {
     color: red;
 }
+
+i.fa-edit:hover {
+    color: orange;
+}

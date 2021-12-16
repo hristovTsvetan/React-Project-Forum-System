@@ -1,9 +1,10 @@
-import PostsList from "./PostsList";
+import Post from "./Post";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useRef} from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useDocument } from "../../hooks/useDocument";
 import Path from "../Path/Path";
+import Pagination from "../Pagination/Pagination";
 
 import './Posts.css';
 import { useUser } from "../../hooks/useUser";
@@ -17,9 +18,23 @@ export default function Posts() {
   const {document} = useDocument('categories', categoryid);
   const [isCanceled, setIsCanceled] = useState(false);
   const { user } = useUser();
- 
-  useEffect(() => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const totalPages =
+    document &&
+    Math.ceil(
+      Object.values(document.subCategories[subcategoryid].posts).length /
+        itemsPerPage
+    );
+
+      //when delete last comment from any poge
+  useEffect(() => {
+    document && totalPages < currentPage && setCurrentPage(totalPages);
+  }, [totalPages]);
+
+  useEffect(() => {
     const setData = async () => {
       const curCategory = await getDocument(categoryid);
 
@@ -36,7 +51,11 @@ export default function Posts() {
     return () => {
       setIsCanceled(true);
     }
-  }, [categoryid, subcategoryid])
+  }, [categoryid, subcategoryid]);
+
+  const handleCurrentPage = (curPage) => {
+    setCurrentPage(curPage);
+  }
 
   return (
     <>
@@ -57,21 +76,22 @@ export default function Posts() {
           )}
           <section className="category posts">
             <article className="posts-wrapper">
-              {document && (
-                <PostsList
-                  allPosts={Object.values(
-                    document.subCategories[subcategoryid].posts
-                  )}
-                />
-              )}
               {document &&
                 Object.values(document.subCategories[subcategoryid].posts)
-                  .length === 0 && (
-                  <p className="info-message">
-                    There is no posts at this category!
-                  </p>
-                )}
+                  .sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate())
+                  .slice(startIndex, startIndex + itemsPerPage)
+                  .map((post) => <Post key={post.id} postInfo={post} />)}
+              {document && totalPages === 0 && (
+                <p className="info-message">
+                  There is no posts at this category!
+                </p>
+              )}
             </article>
+            <Pagination className="pagination"
+              totalPages={totalPages}
+              handleCurrentPage={handleCurrentPage}
+              currentPage={currentPage}
+            />
           </section>
         </>
       )}

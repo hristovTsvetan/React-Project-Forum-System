@@ -29,6 +29,10 @@
     color: red;
 }
 
+.edit-icon-wrapper a:hover {
+    color: orange;
+}
+
 a.post-link {
     width: 100%;
 }
