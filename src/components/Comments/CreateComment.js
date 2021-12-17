@@ -5,6 +5,7 @@ import uniqid from 'uniqid';
 import { timestamp } from '../../firebase/config';
 import { useUser } from "../../hooks/useUser";
 import Path from "../Path/Path";
+import { useTitle } from "../../hooks/useTitle";
 
 export default function CreateComment() {
     const [commentBody, setCommentBody] = useState('');
@@ -16,6 +17,7 @@ export default function CreateComment() {
     const {categoryid, subcategoryid, postId} = useParams();
     const {user} = useUser();
     const history = useHistory();
+    useTitle('Honda forum - create comment');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,7 +71,7 @@ export default function CreateComment() {
             setIsCanceled(true);
         };
 
-    }, [categoryid, subcategoryid, postId, getDocument])
+    }, [categoryid, subcategoryid, postId, getDocument, isCanceled])
 
     return (
       <>

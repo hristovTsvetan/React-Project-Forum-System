@@ -3,6 +3,7 @@ import { useState, useEffect } from "react/cjs/react.development"
 import { authObj, firebaseStorage } from "../../firebase/config";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useUser } from "../../hooks/useUser";
+import { useTitle } from "../../hooks/useTitle";
 
 import './Profile.css';
 
@@ -16,6 +17,7 @@ export default function Profile() {
     const [isCanceled, setIsCanceled] = useState(false);
     const history = useHistory();
     const {getDocument, updateDocument} = useFirestore('users');
+    useTitle('Honda forum - edit profile');
 
     useEffect(() => {
         setDisplayName(user.displayName);

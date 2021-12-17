@@ -1,6 +1,5 @@
 import { useModal } from "../../hooks/useModal"
 import { useFirestore } from "../../hooks/useFirestore";
-import { useHistory } from "react-router-dom";
 
 export default function Delete() {
     const {
@@ -16,7 +15,6 @@ export default function Delete() {
 
     } = useModal();
     const {deleteDocument, updateDocument, getDocument} = useFirestore('categories');
-    const history = useHistory();
 
     let deleteMessage = null;
 

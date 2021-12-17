@@ -1,6 +1,6 @@
 import Post from "./Post";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useDocument } from "../../hooks/useDocument";
 import Path from "../Path/Path";
@@ -8,6 +8,7 @@ import Pagination from "../Pagination/Pagination";
 
 import './Posts.css';
 import { useUser } from "../../hooks/useUser";
+import { useTitle } from "../../hooks/useTitle";
 
 
 export default function Posts() {
@@ -19,8 +20,9 @@ export default function Posts() {
   const [isCanceled, setIsCanceled] = useState(false);
   const { user } = useUser();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
-
+  useTitle('Honda forum - posts');
+  
+  const itemsPerPage = 8;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const totalPages =
     document &&

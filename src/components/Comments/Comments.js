@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
 import Pagination from "../Pagination/Pagination";
+import { useTitle } from "../../hooks/useTitle";
 
 import "./Comments.css";
 import { useFirestore } from "../../hooks/useFirestore";
@@ -13,7 +14,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 export default function Comments() {
   const [dbUsers, setDbUsers] = useState(null);
   const {catId, subId, postId} = useParams();
-  const {document, error} = useDocument('categories', catId);
+  const {document} = useDocument('categories', catId);
   const [isCanceled, setIsCanceled] = useState(false);
   const [categoryName, setCategoryName] = useState('');
   const [subCategoryName, setSubCategoryName] = useState('');
@@ -22,8 +23,9 @@ export default function Comments() {
   const {getDocuments} = useFirestore('users');
   const _getDocuments = useRef(getDocuments).current;
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  useTitle('Honda forum - comments');
 
+  const itemsPerPage = 3;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const totalPages = document && Math.ceil(
     Object.values(document.subCategories[subId].posts[postId].comments).length /
@@ -57,7 +59,7 @@ export default function Comments() {
       return () => {
         setIsCanceled(true);
       }
-  }, [document, totalPages]);
+  }, [document, postId, subId, isCanceled]);
 
 
   const handleCurrentPage = (curPage) => {

@@ -3,7 +3,6 @@ import './Pagination.css';
 
 export default function Pagination({totalPages, handleCurrentPage}) {
     const [active, setActive] = useState(0);
-    const [firstLoad, setFirstLoad] = useState();
     const allPages = [...Array(totalPages).keys()];
 
     useEffect(() => {

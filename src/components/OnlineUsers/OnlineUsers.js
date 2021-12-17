@@ -1,6 +1,6 @@
 import './OnlineUsers.css';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useCollection } from '../../hooks/useCollection';
 import OnlineUser from './OnlineUser';
 

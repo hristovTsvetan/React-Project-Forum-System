@@ -5,6 +5,7 @@ import { timestamp } from '../../firebase/config';
 import { useUser } from '../../hooks/useUser';
 import Path from '../Path/Path';
 import uniqid from 'uniqid';
+import { useTitle } from '../../hooks/useTitle';
 
 import './CreatePost.css';
 
@@ -18,6 +19,7 @@ export default function CreatePost() {
     const {getDocument, updateDocument, response} = useFirestore('categories');
     const {user} = useUser();
     const history = useHistory();
+    useTitle('Honda forum - create post');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
