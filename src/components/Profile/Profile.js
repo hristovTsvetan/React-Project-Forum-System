@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { useState, useEffect } from "react/cjs/react.development"
+import { useState, useEffect } from "react"
 import { authObj, firebaseStorage } from "../../firebase/config";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useUser } from "../../hooks/useUser";
